@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html class="h-full bg-white">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- calender -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="../static/js/locale.js"></script>
+    <script src="../static/js/bootstrap-material-datetimepicker.js"></script>
+    <link rel="stylesheet" href="../static/css/bootstrap-material-datetimepicker.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- timepicki -->
+    <link rel="stylesheet" href="../static/css/timepicki.css">
+    <script src="../static/js/timepicki.js"></script>
+    <script>
+        $(document).ready(function(){
+            // $(".time_element").timepicki();
+            $('#start_time').timepicki({
+                    start_time: ["09", "00", "AM"],
+                    step_size_minutes: 30,
+                    reset: true,
+                }
+            );
+            $('#end_time').timepicki({
+                    start_time: ["06", "00", "PM"],
+                    step_size_minutes: 30,
+                    reset: true,
+                }
+            );
+            $('#lunch_time').timepicki({
+                    start_time: ["12", "00", "PM"],
+                    step_size_minutes: 30,
+                    reset: true,
+                }
+            );
+        });
+    </script>
+
+    <style type="text/tailwindcss">
+        .font-roboto {
+            font-family: "Roboto", serif;
+        }
+
+        @theme {
+            --color-main-sky-highlight: #00a3ed;
+            --color-main-sky-basic: #9bdcfd;
+            --color-main-red-highlight: #ff5353;
+            --color-main-red-basic: #ff9898;
+            --color-main-yellow-highlight: #fbc159ff;
+            --color-main-yellow-basic: #fdd391;
+
+            /* gray-400*/
+            --color-light-text: oklch(0.704 0.04 256.788);
+            /* gray-600 */
+            --color-basic-text: oklch(0.446 0.043 257.281);
+            /* gray-900 */
+            --color-bold-text: oklch(0.208 0.042 265.755);
+        }
+
+        /* PC에서 모바일 크기로 고정 */
+        @media screen and (min-width: 769px) {
+            .mobile-container {
+                width: 375px;
+                margin: 0 auto;
+                background: white;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                min-height: 100vh;
+            }
+        }
+
+        /* 모바일에서는 전체 너비 사용 */
+        @media screen and (max-width: 768px) {
+            .mobile-container {
+                width: 100%;
+                background: white;
+                min-height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body class="h-full font-roboto">
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 class="mt-10 text-center text-3xl tracking-tight text-gray-900">Izikgram</h2>
+    </div>
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm rounded-md outline text-gray-300 p-8 pb-10">
+        <form class="space-y-6" action="#" method="POST">
+            <div>
+                <label for="name" class="block text-lg/6 text-gray-900">이름</label>
+                <div class="mt-2">
+                    <input placeholder="이름을 입력해주세요" type="text" name="name" id="name" autocomplete="email" required class="block w-full rounded-md bg-white px-3 py-1.5 text-lg text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </div>
+            </div>
+
+            <div>
+                <div class="flex items-center justify-between">
+                    <label for="member_id" class="block text-lg/6 text-gray-900">아이디</label>
+                </div>
+                <div class="mt-2">
+                    <div class="relative">
+                        <input placeholder="아이디를 입력해주세요" type="text" name="member_id" id="member_id" required class="block w-full rounded-md bg-white px-3 py-1.5 text-lg text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                        <div class="absolute bottom-6 right-1">
+                            <button class="flex w-23 h-7 justify-center rounded-md bg-main-sky-highlight px-3 py-1.5 text-xs text-white shadow-xs hover:bg-sky-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800">중복 확인</button>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <p class="block text-red-400 text-sm">* 아이디를 확인해주세요</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="flex items-center justify-between">
+                    <label for="password" class="block text-lg/6 text-gray-900">비밀번호</label>
+                </div>
+                <div class="mt-2">
+                    <input placeholder="비밀번호를 입력헤주세요" type="password" name="password" id="password" autocomplete="current-password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-lg text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </div>
+            </div>
+
+            <div>
+                <div class="flex items-center justify-between">
+                    <label for="password2" class="block text-lg/6 text-gray-900">비밀번호 확인</label>
+                </div>
+                <div class="mt-2">
+                    <input placeholder="비밀번호를 다시 입력헤주세요" type="password" name="password2" id="password2" autocomplete="current-password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-lg text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                    <div class="flex items-center justify-between">
+                        <p class="block text-red-400 text-sm">* 비밀번호가 일치하지 않습니다</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="flex items-center justify-between">
+                    <label for="phone_num" class="block text-lg/6 text-gray-900">휴대폰번호</label>
+                </div>
+                <div class="mt-2">
+                    <input placeholder="010-1234-5678" type="tel" name="phone_num" id="phone_num" required class="block w-full rounded-md bg-white px-3 py-1.5 text-lg text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </div>
+            </div>
+
+            <div>
+                <div class="flex items-center justify-between">
+                    <label class="block text-lg/6 text-gray-900">생년월일</label>
+                </div>
+                <div class="mt-2">
+                    <input type="date" name="birth" id="birth" class="block w-full rounded-md bg-white px-3 py-1.5 text-lg text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </div>
+            </div>
+
+            <div>
+                <label for="email" class="block text-lg/6 text-gray-900">이메일</label>
+                <div class="mt-2">
+                    <input placeholder="이메일을 입력해주세요" type="email" name="email" id="email" autocomplete="email" class="block w-full rounded-md bg-white px-3 py-1.5 text-lg text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                </div>
+            </div>
+
+            <div class="flex justify-around">
+                <div>
+                    <label for="male" class="text-bold-text">남자</label>
+                    <input type="radio" id="male" name="gender" value="male" class="m-1">
+                </div>
+                <div>
+                    <label for="female" class="text-bold-text">여자</label>
+                    <input type="radio" id="female" name="gender" value="female" class="m-1">
+                </div>
+            </div>
+
+            <div class="flex justify-between">
+                <div class="flex">
+                    <label for="payday" class="w-20 max-w-12 text-bold-text mr-4">월급날</label>
+                    <select id="payday" class="w-20 max-h-5 outline rounded-md text-bold-text text-right">
+                        <option value="1">1일</option>
+                        <option value="2">2일</option>
+                    </select>
+                </div>
+                <div class="flex">
+                    <label for="start_time" class="w-15 text-bold-text ml-9">출근시간</label>
+                    <input type="text" name="start_time" id="start_time" placeholder="09:00 AM" class="time_element w-20 h-5 outline rounded-md text-bold-text text-right">
+                </div>
+            </div>
+
+            <div class="flex relative">
+                <div class="flex">
+                    <div class="flex">
+                        <label for="end_time" class="w-15 text-bold-text mr-1">퇴근시간</label>
+                        <input type="text" name="end_time" id="end_time" placeholder="06:00 PM" class="time_element w-20 h-5 outline rounded-md text-bold-text text-right">
+                    </div>
+                </div>
+                <div class="flex absolute left-45">
+                    <div class="flex">
+                        <label for="lunch_time" class="w-15 text-bold-text">점심시간</label>
+                        <input type="text" name="lunch_time" id="lunch_time" placeholder="12:00 PM" class="time_element w-20 h-5 outline rounded-md text-bold-text text-right">
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label for="email" class="block text-lg/6 text-gray-900">희망 근무지</label>
+                <div class="mt-2">
+                    <select id="loc_mod" class="block w-full rounded-md bg-white px-3 py-1.5 text-lg text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 h-9">
+                        <option value="1">서울특별시</option>
+                        <option value="2">경기도</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex justify-between">
+                <div class="flex flex-col w-1/2 mr-5">
+                    <label for="ind_cd" class="text-bold-text text-center">산업/업종</label>
+                    <select id="ind_cd" class="outline rounded-md text-bold-text text-center">
+                        <option value="1">IT/소프트웨어</option>
+                        <option value="2">2</option>
+                    </select>
+                </div>
+                <div class="flex flex-col w-1/2">
+                    <label for="edu_lv" class="text-bold-text text-center">학력</label>
+                    <select id="edu_lv" class="outline rounded-md text-bold-text text-center">
+                        <option value="1">대졸4년제</option>
+                        <option value="2">2</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <input type="text" name="timepicker" class="time_element"/>
+            </div>
+
+            <div class="flex mt-10">
+                <button type="submit" class="mr-5 w-1/2 rounded-md bg-main-sky-highlight px-3 py-1.5 text-lg/6 text-white shadow-xs hover:bg-sky-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800">가입하기</button>
+                <button type="submit" class="w-1/2 rounded-md bg-main-sky-highlight px-3 py-1.5 text-lg/6 text-white shadow-xs hover:bg-sky-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800">취소</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- calender -->
+    <script>
+        $('#birth').bootstrapMaterialDatePicker();
+    </script>
+
+    <!-- failModal -->
+<!--    <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">-->
+<!--        &lt;!&ndash;-->
+<!--          Background backdrop, show/hide based on modal state.-->
+
+<!--          Entering: "ease-out duration-300"-->
+<!--            From: "opacity-0"-->
+<!--            To: "opacity-100"-->
+<!--          Leaving: "ease-in duration-200"-->
+<!--            From: "opacity-100"-->
+<!--            To: "opacity-0"-->
+<!--        &ndash;&gt;-->
+<!--        <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>-->
+
+<!--        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">-->
+<!--            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">-->
+<!--                &lt;!&ndash;-->
+<!--                  Modal panel, show/hide based on modal state.-->
+
+<!--                  Entering: "ease-out duration-300"-->
+<!--                    From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"-->
+<!--                    To: "opacity-100 translate-y-0 sm:scale-100"-->
+<!--                  Leaving: "ease-in duration-200"-->
+<!--                    From: "opacity-100 translate-y-0 sm:scale-100"-->
+<!--                    To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"-->
+<!--                &ndash;&gt;-->
+<!--                <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">-->
+<!--                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">-->
+<!--                        <div class="sm:flex sm:items-start">-->
+<!--                            <div class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10">-->
+<!--                                <svg class="size-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">-->
+<!--                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />-->
+<!--                                </svg>-->
+<!--                            </div>-->
+<!--                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">-->
+<!--                                <h3 class="text-base font-semibold text-gray-900" id="modal-title">#{아이디 중복!}</h3>-->
+<!--                                <div class="mt-2">-->
+<!--                                    <p class="text-sm text-gray-500">#{사용 불가능한 아이디입니다}</p>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">-->
+<!--                        <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto sm:ml-3">확인</button>-->
+<!--&lt;!&ndash;                        <button type="button" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 sm:w-auto">Deactivate</button>&ndash;&gt;-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <!-- successModal -->
+<!--    <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">-->
+<!--        &lt;!&ndash;-->
+<!--          Background backdrop, show/hide based on modal state.-->
+
+<!--          Entering: "ease-out duration-300"-->
+<!--            From: "opacity-0"-->
+<!--            To: "opacity-100"-->
+<!--          Leaving: "ease-in duration-200"-->
+<!--            From: "opacity-100"-->
+<!--            To: "opacity-0"-->
+<!--        &ndash;&gt;-->
+<!--        <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>-->
+
+<!--        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">-->
+<!--            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">-->
+<!--                &lt;!&ndash;-->
+<!--                  Modal panel, show/hide based on modal state.-->
+
+<!--                  Entering: "ease-out duration-300"-->
+<!--                    From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"-->
+<!--                    To: "opacity-100 translate-y-0 sm:scale-100"-->
+<!--                  Leaving: "ease-in duration-200"-->
+<!--                    From: "opacity-100 translate-y-0 sm:scale-100"-->
+<!--                    To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"-->
+<!--                &ndash;&gt;-->
+<!--                <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">-->
+<!--                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">-->
+<!--                        <div class="sm:flex sm:items-start">-->
+<!--                            <div class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full sm:mx-0 sm:size-10">-->
+<!--                                <img width="48" height="48" src="https://img.icons8.com/color/48/checked-checkbox.png" alt="checked-checkbox"/>-->
+<!--                            </div>-->
+<!--                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">-->
+<!--                                <h3 class="text-base font-semibold text-gray-900" id="modal-title">#{아이디 사용가능!}</h3>-->
+<!--                                <div class="mt-2">-->
+<!--                                    <p class="text-sm text-gray-500">#{사용 가능한 아이디입니다}</p>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">-->
+<!--                        <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto sm:ml-3">확인</button>-->
+<!--                        &lt;!&ndash;                        <button type="button" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 sm:w-auto">Deactivate</button>&ndash;&gt;-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+</div>
+</body>
+</html>
