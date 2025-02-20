@@ -1,19 +1,21 @@
 package com.izikgram.board.controller;
 
 import com.izikgram.board.entity.Board;
+import com.izikgram.board.entity.BoardDto;
 import com.izikgram.board.entity.CommentDto;
 import com.izikgram.board.service.BoardService;
 import com.izikgram.global.security.CustomUserDetails;
 import com.izikgram.user.entity.User;
-import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
-
+@Slf4j
 @Controller
 @RequestMapping("/board")
 public class  BoardController {
@@ -33,7 +35,7 @@ public class  BoardController {
         }
 
         String board_name = boardService.findBoardName(board_type);
-        List<Board> listBoard;
+        List<BoardDto> listBoard;
         if (board_type == 1) {
             listBoard = boardService.SelectBoardList01(board_type);
         } else {
@@ -44,7 +46,7 @@ public class  BoardController {
         model.addAttribute("board_name", board_name);
         model.addAttribute("listBoard", listBoard);
 
-        return "/board/community";
+        return "board/community";
     }
 
     //자유,하소연 작성하기 페이지 이동
@@ -70,7 +72,7 @@ public class  BoardController {
         model.addAttribute("board_type", board_type);
 //        model.addAttribute("writer_id", writer_id);
 
-        return "/board/postForm";
+        return "board/postForm";
     }
 
     // 글작성
@@ -97,13 +99,6 @@ public class  BoardController {
         }
 
         return "redirect:/board/" + board_type;
-    }
-
-
-    //인기게시판
-    @GetMapping("/hot")
-    public String hotCommunity(){
-        return "/board/popularityCommunity";
     }
 
     //자유,하소연 상세보기
@@ -137,7 +132,7 @@ public class  BoardController {
         model.addAttribute("member_id", writer_id);
         model.addAttribute("comment", ListCommentDto);
 
-        return "/board/postDetail";
+        return "board/postDetail";
     }
 
     //자유,하소연 게시글 수정하기페이지 이동
@@ -153,7 +148,7 @@ public class  BoardController {
 
         model.addAttribute("board", board);
 
-        return "/board/postFormModify";
+        return "board/postFormModify";
     }
 
     //자유, 하소연 게시글 수정하기
@@ -191,6 +186,30 @@ public class  BoardController {
             }
         }
         return "redirect:/board/" + board_type;
+    }
+
+    //인기게시판
+    @GetMapping("/hot")
+    public String hotCommunity(Model model){
+
+        Map<String, List<BoardDto>> issueBoardList = boardService.getIssueBoardList01();
+
+        List<BoardDto> issueBoardList01 = issueBoardList.get("issueBoardList01");
+        List<BoardDto> issueBoardList02 = issueBoardList.get("issueBoardList02");
+
+        log.info("issueBoardList01: {}, issueBoardList02: {}", issueBoardList01, issueBoardList02);
+        model.addAttribute("issueBoardList01",issueBoardList01);
+        model.addAttribute("issueBoardList02",issueBoardList02);
+
+        return "board/popularityCommunity";
+    }
+
+    @GetMapping("/myboard")
+    public String myBoard(Model model){
+
+
+
+        return "board/myBoard";
     }
 
 }

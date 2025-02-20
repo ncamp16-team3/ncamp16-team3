@@ -4,9 +4,11 @@ import com.izikgram.alarm.service.AlarmService;
 import com.izikgram.alarm.service.SseEmitterService;
 import com.izikgram.board.entity.Board;
 
+import com.izikgram.board.entity.BoardDto;
 import com.izikgram.board.entity.CommentDto;
 import com.izikgram.board.repository.BoardMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,11 +38,11 @@ public class BoardService {
     }
 
     // 게시판 리스트 조회
-    public List<Board> SelectBoardList01(int board_type) {
+    public List<BoardDto> SelectBoardList01(int board_type) {
         return boardMapper.getBoard01(board_type);
     }
 
-    public List<Board> SelectBoardList02(int board_type) {
+    public List<BoardDto> SelectBoardList02(int board_type) {
         return boardMapper.getBoard02(board_type);
     }
 
@@ -262,4 +264,52 @@ public class BoardService {
         return null;
     }
 
+//-------------------------------
+    // 댓글 삭제 서비스
+    public boolean deleteComment01(String loggedInUserId, int commentId) {
+        // 댓글 작성자의 ID를 가져옵니다.
+        String commentWriterId = boardMapper.getCommentWriterId01(commentId);
+
+        // 작성자가 로그인한 사용자와 일치하는지 확인
+        if (commentWriterId != null && commentWriterId.equals(loggedInUserId)) {
+            // 삭제 가능하면 댓글을 삭제합니다.
+            int result = boardMapper.deleteComment01(commentId);
+            return result > 0;  // 삭제된 행의 수가 1 이상이면 성공
+        }
+        return false;  // 작성자가 아니면 삭제 불가
+    }
+
+    public boolean deleteComment02(String loggedInUserId, int commentId) {
+        // 댓글 작성자의 ID를 가져옵니다.
+        String commentWriterId = boardMapper.getCommentWriterId01(commentId);
+
+        // 작성자가 로그인한 사용자와 일치하는지 확인
+        if (commentWriterId != null && commentWriterId.equals(loggedInUserId)) {
+            // 삭제 가능하면 댓글을 삭제합니다.
+            int result = boardMapper.deleteComment02(commentId);
+            return result > 0;  // 삭제된 행의 수가 1 이상이면 성공
+        }
+        return false;  // 작성자가 아니면 삭제 불가
+    }
+
+    //-----------------------인기게시판
+//    public List<BoardDto> getIssueBoardList01(@Param("board_type") int boardType){
+//        return boardMapper.getIssueBoardList01(boardType);
+//    }
+//    public List<BoardDto> getIssueBoardList02(@Param("board_type") int boardType){
+//        return boardMapper.getIssueBoardList02(boardType);
+//    }
+
+    public Map<String, List<BoardDto>> getIssueBoardList01(){
+        Map<String, List<BoardDto>> map = new HashMap<>();
+        List<BoardDto> issueBoardList01 = boardMapper.getIssueBoardList01();
+        List<BoardDto> issueBoardList02 = boardMapper.getIssueBoardList02();
+
+
+        log.info("issueBoardList01:{}, issueBoardList02 {} ", issueBoardList01, issueBoardList02);
+        map.put("issueBoardList01", issueBoardList01);
+        map.put("issueBoardList02", issueBoardList02);
+
+        return map;
+    }
 }

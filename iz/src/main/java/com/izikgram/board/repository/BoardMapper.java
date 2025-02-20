@@ -1,6 +1,7 @@
 package com.izikgram.board.repository;
 
 import com.izikgram.board.entity.Board;
+import com.izikgram.board.entity.BoardDto;
 import com.izikgram.board.entity.Comment;
 import com.izikgram.board.entity.CommentDto;
 import org.apache.ibatis.annotations.*;
@@ -18,48 +19,27 @@ public interface BoardMapper {
     String getBoardName(@Param("board_type") int board_type);
 
     // 게시판 전체 조회
-    @Select("select * " +
-            "from iz_board_type t " +
-            "join iz_board01 b " +
-            "on t.board_type = b.board_type " +
-            "where t.board_type = #{board_type} " +
-            "order by board_id desc")
-    List<Board> getBoard01(@Param("board_type") int board_type);
+    @Select("SELECT " +
+            "        b.*, " +
+            "        COALESCE(COUNT(c.comment_id), 0) AS comment_count " +
+            "    FROM iz_board_type t " +
+            "    JOIN iz_board01 b ON t.board_type = b.board_type " +
+            "    LEFT JOIN iz_board01_comment c ON b.board_id = c.board_id " +
+            "    WHERE t.board_type = #{board_type} " +
+            "    GROUP BY b.board_id " +
+            "    ORDER BY b.board_id DESC")
+    List<BoardDto> getBoard01(@Param("board_type") int board_type);
 
-    @Select("select * " +
-            "from iz_board_type t " +
-            "join iz_board02 b " +
-            "on t.board_type = b.board_type " +
-            "where t.board_type = #{board_type} " +
-            "order by board_id desc")
-    List<Board> getBoard02(@Param("board_type") int board_type);
-
-    // 댓글 리스트 조회
-    @Select("select c.comment_id, c.board_id, c.writer_id, c.comment_content, c.reg_date, " +
-            "m.nickname " +
-            "from iz_board01_comment c " +
-            "join iz_member m " +
-            "on c.writer_id = m.member_id " +
-            "where board_id = #{board_id} order by comment_id desc")
-    List<CommentDto> commentGetList01(@Param("board_id") int board_id);
-
-    @Select("select c.comment_id, c.board_id, c.writer_id, c.comment_content, c.reg_date, " +
-            "m.nickname " +
-            "from iz_board01_comment c " +
-            "join iz_member m " +
-            "on c.writer_id = m.member_id " +
-            "where board_id = #{board_id} order by comment_id desc")
-    List<CommentDto> commentGetList02(@Param("board_id") int board_id);
-
-    @Select("select count(comment_id) " +
-            "from iz_board01_comment " +
-            "where board_id = #{board_id}")
-    Comment commentGetCount01(@Param("board_id") int board_id);
-
-    @Select("select count(comment_id) " +
-            "from iz_board02_comment " +
-            "where board_id = #{board_id}")
-    Comment commentGetCount02(@Param("board_id") int board_id);
+    @Select("SELECT " +
+            "        b.*, " +
+            "        COALESCE(COUNT(c.comment_id), 0) AS comment_count " +
+            "    FROM iz_board_type t " +
+            "    JOIN iz_board02 b ON t.board_type = b.board_type " +
+            "    LEFT JOIN iz_board02_comment c ON b.board_id = c.board_id " +
+            "    WHERE t.board_type = #{board_type} " +
+            "    GROUP BY b.board_id " +
+            "    ORDER BY b.board_id DESC")
+    List<BoardDto> getBoard02(@Param("board_type") int board_type);
 
     // 글작성
     @Insert("insert into iz_board01(writer_id,title,content,board_type) " +
@@ -72,7 +52,7 @@ public interface BoardMapper {
     void insertBoard02(@Param("writer_id") String writer_id, @Param("title") String title, @Param("content") String content,
                        @Param("board_type") int board_type);
 
-    //상세페이지 보기
+    //게시글 상세보기
     @Select("SELECT * " +
             "FROM iz_board01  " +
             "WHERE board_id = #{board_id} ")
@@ -83,8 +63,25 @@ public interface BoardMapper {
             "WHERE board_id = #{board_id} ")
     Board selectBoard02(@Param("board_id") int board_id);
 
+    // 게시글 상세보기 댓글 리스트 조회
+    @Select("select c.comment_id, c.board_id, c.writer_id, c.comment_content, c.reg_date, " +
+            "m.nickname " +
+            "from iz_board01_comment c " +
+            "join iz_member m " +
+            "on c.writer_id = m.member_id " +
+            "where board_id = #{board_id} order by comment_id desc")
+    List<CommentDto> commentGetList01(@Param("board_id") int board_id);
 
-    //자유게시글 업데이트
+    @Select("select c.comment_id, c.board_id, c.writer_id, c.comment_content, c.reg_date, " +
+            "m.nickname " +
+            "from iz_board02_comment c " +
+            "join iz_member m " +
+            "on c.writer_id = m.member_id " +
+            "where board_id = #{board_id} order by comment_id desc")
+    List<CommentDto> commentGetList02(@Param("board_id") int board_id);
+
+
+    //자유/하소연 게시글 업데이트
     @Update("UPDATE iz_board01 " +
             "SET " +
             "    title = #{title}, " +
@@ -95,7 +92,6 @@ public interface BoardMapper {
                        @Param("title") String title,
                        @Param("content")String content);
 
-    //하소연게시글 업데이트
     @Update("UPDATE iz_board02 " +
             "SET " +
             "    title = #{title}, " +
@@ -105,9 +101,8 @@ public interface BoardMapper {
     void updateBoard02(@Param("board_id") int board_id,
                        @Param("title") String title,
                        @Param("content")String content);
-    // ------------------------------
 
-
+    //좋아요 구현
     // 회원의 게시글 좋아요 개수
     @Select("SELECT COUNT(*) FROM iz_board01_like WHERE board_id=#{board_id} and member_id=#{member_id}")
     int countLikeByMember(@Param("board_id") int boardId, @Param("member_id") String memberId);
@@ -206,8 +201,6 @@ public interface BoardMapper {
     Board totalLikeDisLike02(@Param("board_id") int boardId);
 
 
-
-
     //댓글 저장
     @Insert("insert into iz_board01_comment(board_id, writer_id, comment_content) " +
             "values(#{board_id}, #{writer_id}, #{comment_content})")
@@ -220,14 +213,91 @@ public interface BoardMapper {
                       @Param("comment_content") String comment_content);
 
     // 작성한 댓글 조회
-    @Select("SELECT * FROM iz_board01_comment WHERE board_id = #{board_id} ORDER BY comment_id DESC LIMIT 1")
+    @Select("select c.comment_id, c.comment_content, c.reg_date, m.nickname " +
+            "from iz_board01_comment c " +
+            "join iz_member m on c.writer_id = m.member_id " +
+            "where c.board_id = #{board_id} " +
+            "order by c.comment_id desc " +
+            "limit 1 ")
     CommentDto getLastComment01(@Param("board_id") int boardId);
 
-    @Select("SELECT * FROM iz_board02_comment WHERE board_id = #{board_id} ORDER BY comment_id DESC LIMIT 1")
+    @Select("select c.comment_id, c.comment_content, c.reg_date, m.nickname " +
+            "from iz_board02_comment c " +
+            "join iz_member m on c.writer_id = m.member_id " +
+            "where c.board_id = #{board_id} " +
+            "order by c.comment_id desc " +
+            "limit 1 ")
     CommentDto getLastComment02(@Param("board_id") int boardId);
 
+//-----------------------------------
+    //댓글 삭제 -- 수정중..막힘....
+    // 댓글 작성자 ID 가져오기
+    @Select("SELECT writer_id FROM iz_board01_comment WHERE comment_id = #{comment_id}")
+    String getCommentWriterId01(@Param("comment_id")int commentId);
 
+    // 댓글 삭제
+    @Delete("DELETE FROM iz_board01_comment WHERE comment_id = #{comment_id}")
+    int deleteComment01(@Param("comment_id")int commentId);
 
+    // 댓글 작성자 ID 가져오기
+    @Select("SELECT writer_id FROM iz_board02_comment WHERE comment_id = #{comment_id}")
+    String getCommentWriterId02(@Param("comment_id")int commentId);
 
+    // 댓글 삭제
+    @Delete("DELETE FROM iz_board02_comment WHERE comment_id = #{comment_id}")
+    int deleteComment02(@Param("comment_id")int commentId);
 
+    //-------------------------------인기게시판
+//    @Select("select b.*, " +
+//            "coalesce(count(c.comment_id), 0) AS comment_count " +
+//            "from iz_board_type t " +
+//            "join iz_board01 b on t.board_type = b.board_type " +
+//            "left join iz_board01_comment c on b.board_id = c.board_id " +
+//            "where b.board_type = #{board_type} " +
+//            "group by b.board_id " +
+//            "order by  like_count desc " +
+//            "limit 3")
+//    List<BoardDto> getIssueBoardList01(@Param("board_type") int boardType);
+//
+//    @Select("select b.*, " +
+//            "coalesce(count(c.comment_id), 0) AS comment_count " +
+//            "from iz_board_type t " +
+//            "join iz_board01 b on t.board_type = b.board_type " +
+//            "left join iz_board02_comment c on b.board_id = c.board_id " +
+//            "where b.board_type = #{board_type} " +
+//            "group by b.board_id " +
+//            "order by  like_count desc " +
+//            "limit 3")
+//    List<BoardDto> getIssueBoardList02(@Param("board_type") int boardType);
+
+    @Select("select b.*, " +
+            "coalesce(count(c.comment_id), 0) AS comment_count " +
+            "from iz_board_type t " +
+            "join iz_board01 b on t.board_type = b.board_type " +
+            "left join iz_board01_comment c on b.board_id = c.board_id " +
+            "where b.board_type = 1 " +
+            "group by b.board_id " +
+            "order by  like_count desc, reg_date desc " +
+            "limit 3")
+    List<BoardDto> getIssueBoardList01();
+
+    @Select("select b.*, " +
+            "coalesce(count(c.comment_id), 0) AS comment_count " +
+            "from iz_board_type t " +
+            "join iz_board02 b on t.board_type = b.board_type " +
+            "left join iz_board02_comment c on b.board_id = c.board_id " +
+            "where b.board_type = 2 " +
+            "group by b.board_id " +
+            "order by  like_count desc, reg_date desc  " +
+            "limit 3")
+    List<BoardDto> getIssueBoardList02();
+
+//    @Select("SELECT b.*, " +
+//            "COALESCE(COUNT(c.comment_id), 0) AS comment_count " +
+//            "FROM iz_board_type t " +
+//            "JOIN iz_board02 b ON t.board_type = b.board_type " +
+//            "LEFT JOIN iz_board02_comment c ON b.board_id = c.board_id " +
+//            "WHERE b.writer_id = #{writer_id}  " +
+//            "GROUP BY b.board_id " +
+//            "ORDER BY  reg_date desc")
 }

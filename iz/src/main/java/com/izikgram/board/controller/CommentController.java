@@ -7,6 +7,7 @@ import com.izikgram.global.security.CustomUserDetails;
 import com.izikgram.user.entity.User;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,7 @@ public class CommentController {
             User user = userDetails.getUser();
 
             String memberId = user.getMember_id();
-            String nickname = user.getNickname();
+
 
             // 댓글 저장 (board_type에 따라 다른 테이블에 저장)
             if (boardType == 1) {
@@ -57,6 +58,7 @@ public class CommentController {
             response.put("nickname", newComment.getNickname());
             response.put("comment_content", newComment.getComment_content());
             response.put("reg_date", newComment.getReg_date().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            response.put("comment_id", newComment.getComment_id());
             response.put("success", true);
 
             return ResponseEntity.ok(response);
@@ -67,6 +69,37 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+//---------------------------------------
+    // 댓글 삭제
+    @DeleteMapping("/{boardType}/comment/{commentId}/delete")
+    public ResponseEntity<?> deleteComment(
+            @PathVariable("boardType")  int boardType,  // 경로 변수 사용
+            @PathVariable("commentId") int commentId,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+        try {
+            User user = userDetails.getUser();
+            String loggedInUserId = user.getMember_id();
 
+            if (boardType == 1) {
+                boolean isDeleted = boardService.deleteComment01(loggedInUserId, commentId);
+                if (isDeleted) {
+                    return ResponseEntity.ok().body("{\"success\": true}");
+                } else {
+                    return ResponseEntity.status(403).body("{\"success\": false, \"message\": \"작성자만 댓글을 삭제할 수 있습니다.\"}");
+                }
+            } else if (boardType == 2) {
+                boolean isDeleted = boardService.deleteComment02(loggedInUserId, commentId);
+                if (isDeleted) {
+                    return ResponseEntity.ok().body("{\"success\": true}");
+                } else {
+                    return ResponseEntity.status(403).body("{\"success\": false, \"message\": \"작성자만 댓글을 삭제할 수 있습니다.\"}");
+                }
+            }
 
+        } catch (Exception e) {
+            log.error("댓글 삭제 중 오류 발생: {}", e.getMessage(), e);
+            return ResponseEntity.status(500).body("{\"success\": false, \"message\": \"서버 오류\"}");
+        }
+        return null;
+    }
 }
