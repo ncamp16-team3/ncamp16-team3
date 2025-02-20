@@ -6,6 +6,7 @@ import com.izikgram.board.entity.CommentDto;
 import com.izikgram.board.service.BoardService;
 import com.izikgram.global.security.CustomUserDetails;
 import com.izikgram.user.entity.User;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -108,6 +109,8 @@ public class  BoardController {
                              @AuthenticationPrincipal CustomUserDetails userDetails,
                              Model model ){
 
+        log.info("board_type : {}", board_type);
+
         //세션에서 User 객체 가져오기
         User user = userDetails.getUser();
         String writer_id = user.getMember_id();
@@ -126,11 +129,12 @@ public class  BoardController {
             return "redirect:/board/" + board_type;
         }
 
-
-
         model.addAttribute("board", board);
         model.addAttribute("member_id", writer_id);
         model.addAttribute("comment", ListCommentDto);
+        log.info("board : {}", board);
+        log.info("member_id : {}", writer_id);
+        log.info("comment : {}", ListCommentDto);
 
         return "board/postDetail";
     }
