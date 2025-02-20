@@ -248,27 +248,7 @@ public interface BoardMapper {
     int deleteComment02(@Param("comment_id")int commentId);
 
     //-------------------------------인기게시판
-//    @Select("select b.*, " +
-//            "coalesce(count(c.comment_id), 0) AS comment_count " +
-//            "from iz_board_type t " +
-//            "join iz_board01 b on t.board_type = b.board_type " +
-//            "left join iz_board01_comment c on b.board_id = c.board_id " +
-//            "where b.board_type = #{board_type} " +
-//            "group by b.board_id " +
-//            "order by  like_count desc " +
-//            "limit 3")
-//    List<BoardDto> getIssueBoardList01(@Param("board_type") int boardType);
-//
-//    @Select("select b.*, " +
-//            "coalesce(count(c.comment_id), 0) AS comment_count " +
-//            "from iz_board_type t " +
-//            "join iz_board01 b on t.board_type = b.board_type " +
-//            "left join iz_board02_comment c on b.board_id = c.board_id " +
-//            "where b.board_type = #{board_type} " +
-//            "group by b.board_id " +
-//            "order by  like_count desc " +
-//            "limit 3")
-//    List<BoardDto> getIssueBoardList02(@Param("board_type") int boardType);
+
 
     @Select("select b.*, " +
             "coalesce(count(c.comment_id), 0) AS comment_count " +

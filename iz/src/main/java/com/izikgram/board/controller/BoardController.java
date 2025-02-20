@@ -213,6 +213,8 @@ public class  BoardController {
 
 
 
+
+
         return "board/myBoard";
     }
 
