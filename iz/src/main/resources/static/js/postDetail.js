@@ -94,7 +94,7 @@ function toggleComment(button) {
         moreButton.textContent = '닫기';
     } else {
         textarea.classList.add('overflow-hidden');
-        textarea.style.height = '2rem';
+        textarea.style.height = '1.7rem';
         moreButton.textContent = '더보기';
     }
 }
