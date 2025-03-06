@@ -136,7 +136,7 @@ function saveComment() {
                     </div>
                     <div class="flex justify-between items-start relative mt-2">
                         <div class="comment-content w-full" style="height: ${response.comment_height}px;">
-                            <textarea class="comment-input focus:outline-none p-2 text-sm font-black w-full resize-none overflow-hidden h-8" readonly>${response.comment_content}</textarea>
+                            <textarea class="comment-input focus:outline-none p-2 text-sm font-black w-full resize-none overflow-hidden h-[1.7rem]" readonly>${response.comment_content}</textarea>
                             <button type="button" class="text-blue-500 hover:text-blue-600 cursor-pointer" id="moreBtn" onclick="toggleComment(this)">
                                 더보기
                             </button>
