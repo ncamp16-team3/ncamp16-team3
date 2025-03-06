@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/default.css}">
     <style>
         body, html {
             overscroll-behavior-y: contain;
             overflow: hidden;
+            font-family: 'Noto Sans KR', sans-serif;
         }
         @keyframes popIn {
             0% { transform: scale(0.5) rotate(20deg); opacity: 0; }
@@ -37,21 +40,104 @@
                 text-align: center;
             }
         }
+
+        /* 새로운 스타일 */
+        .button-gradient {
+            background: linear-gradient(to right, #ff8a00, #da1b60);
+            transition: all 0.3s ease;
+        }
+
+        .button-gradient:hover {
+            background: linear-gradient(to right, #da1b60, #ff8a00);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-input {
+            transition: all 0.3s ease;
+        }
+
+        .menu-input:focus {
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+            outline: none;
+        }
+
+        @keyframes arrowBounce {
+            0%, 100% { transform: translateY(0) translateX(-50%); }
+            50% { transform: translateY(-5px) translateX(-50%); }
+        }
+
+        #arrow {
+            animation: arrowBounce 1.5s ease-in-out infinite;
+            filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.3));
+        }
+
+        /* 룰렛 스타일 추가 */
+        canvas {
+            border-radius: 50%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border: 8px solid white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .roulette-wrapper {
+            position: relative;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f8fafc;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 전구 스타일 */
+        .bulb {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #fcd34d;
+            box-shadow: 0 0 10px #fcd34d, 0 0 20px #fcd34d;
+            z-index: 5;
+        }
+
+        @keyframes bulbBlink1 {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        @keyframes bulbBlink2 {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .bulb-group-1 {
+            animation: bulbBlink1 1s infinite;
+        }
+
+        .bulb-group-2 {
+            animation: bulbBlink2 1s infinite;
+        }
     </style>
 </head>
-<body class="mobile-container bg-[#f7f8fc] min-h-screen flex justify-center items-center">
-<div id="initialSetup" class="w-full max-w-md p-8 bg-white rounded-xl shadow-2xl">
-    <h2 class="text-2xl font-bold mb-6 text-center">룰렛 메뉴 설정</h2>
+<body class="bg-gray-100 mobile-container">
+<div class="pt-20"><header th:replace="~{header :: header} " class="pt-4"></header></div>
+<div id="initialSetup" class="flex flex-col items-center w-full md:w-[600px] md:mx-auto md:shadow-md bg-white min-h-screen relative">    <h2 class="text-2xl font-bold mb-2 text-center bg-[#9bdcfd] from-orange-500 to-pink-500 text-transparent bg-clip-text">오늘 뭐 먹지?</h2>
+    <p class="text-gray-600 text-center mb-6">메뉴를 입력하고 룰렛을 돌려보세요!</p>
+
     <div id="menuInputs" class="space-y-4">
         <div class="flex items-center space-x-2">
             <input type="text" class="menu-input flex-grow px-4 py-2 border rounded-md" placeholder="메뉴 1">
-            <button onclick="addMenuInput()" class="bg-green-500 text-white px-4 py-2 rounded-md">+</button>
-            <button onclick="removeMenuInput()" class="bg-red-500 text-white px-4 py-2 rounded-md">-</button>
+            <button onclick="addMenuInput()" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition">+</button>
+            <button onclick="removeMenuInput()" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition">-</button>
         </div>
     </div>
-    <button onclick="startRoulette()" class="w-full mt-6 bg-[#febf00] text-white py-3 rounded-full hover:bg-yellow-600 transition">
-        룰렛 시작
-    </button>
+
+    <div class="flex justify-center">
+        <button onclick="startRoulette()" class="w-36 mt-6 bg-[#9bdcfd] text-white py-3 rounded-full hover:shadow-lg transition">
+            룰렛 시작
+        </button>
+    </div>
+</div>
 </div>
 
 <div id="rouletteContainer" class="hidden mobile-container w-full max-w-4xl relative">
@@ -61,17 +147,23 @@
     <!-- 승자 팝업 -->
     <div id="winnerPopup" class="fixed z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden"></div>
 
-    <!-- 룰렛 캔버스 -->
-    <canvas width="600" height="600" class="mx-auto mt-[20px] transition-all"></canvas>
+    <!-- 룰렛 래퍼 -->
+    <div class="roulette-wrapper mx-auto w-fit relative">
+        <!-- 전구 컨테이너 - 자바스크립트로 채워질 예정 -->
+        <div id="bulbContainer" class="absolute w-full h-full top-0 left-0 z-2"></div>
 
-    <!-- 화살표 -->
-    <svg id="arrow" viewBox="0 0 100 100" class="absolute top-[5px] left-1/2 transform -translate-x-1/2 w-16 h-16 z-10" style="fill: red;">
-        <path d="M50 90 L30 30 L70 30 Z" />
-    </svg>
+        <!-- 화살표 -->
+        <svg id="arrow" viewBox="0 0 100 100" class="absolute top-[-1px] left-1/2 transform -translate-x-1/2 w-16 h-16 z-10" style="fill: #ff5252;">
+            <path d="M50 90 L30 30 L70 30" />
+        </svg>
+
+        <!-- 룰렛 캔버스 -->
+        <canvas width="500" height="500" class="mx-auto transition-all"></canvas>
+    </div>
 
     <!-- 버튼 컨테이너 -->
-    <div id="buttonContainer" class="flex justify-center items-center space-x-4 mt-4">
-        <button id="rotateButton" onclick="rotate()" class="bg-[#febf00] py-3 px-10 text-2xl font-semibold rounded-full text-[#fff] hover:bg-[#444] hover:text-[#f9f9f9] transition duration-300 transform hover:scale-105">
+    <div id="buttonContainer" class="flex justify-center items-center space-x-4 mt-8">
+        <button id="rotateButton" onclick="rotate()" class="bg-[#9bdcfd] py-3 px-10 text-2xl font-semibold rounded-full text-[#fff] hover:text-[#f9f9f9] transition duration-300 transform hover:scale-105 shadow-md">
             돌려돌려 돌림판
         </button>
     </div>
@@ -86,14 +178,34 @@
     const rotateButton = document.querySelector('#rotateButton');
     const winnerPopup = document.querySelector('#winnerPopup');
     const debugInfo = document.getElementById('debugInfo');
+    const bulbContainer = document.getElementById('bulbContainer');
 
     let product = [];
-    const colors = ['#87CEEB', '#4682B4', '#5FA8D3']; // 하늘색 계열
+    const colors = [
+        '#9bdcfd', // 하늘색 (기본 버튼색과 동일)
+        '#fcd34d', // 노란색
+        '#a5b4fc', // 연한 보라색
+        '#c4b5fd', // 라벤더
+        '#fdba74', // 살구색
+        '#86efac', // 연한 녹색
+        '#bae6fd', // 연한 하늘색
+        '#fbcfe8', // 연한 분홍색
+        '#d8b4fe'  // 연한 자주색
+    ];
     let isRotating = false;
     let currentRotation = 0;
 
+    // 전구 색상
+    const bulbColors = [
+        '#fcd34d', // 노란색
+        '#f87171', // 빨간색
+        '#60a5fa', // 파란색
+        '#4ade80', // 녹색
+        '#f472b6'  // 분홍색
+    ];
+
     function addMenuInput() {
-        if (menuInputs.children.length < 12) {
+        if (menuInputs.children.length < 10) {
             const newInputDiv = document.createElement('div');
             newInputDiv.classList.add('flex', 'items-center', 'space-x-2');
             newInputDiv.innerHTML = `
@@ -106,6 +218,31 @@
     function removeMenuInput() {
         if (menuInputs.children.length > 1) {
             menuInputs.removeChild(menuInputs.lastChild);
+        }
+    }
+
+    // 전구 생성 함수
+    function createBulbs() {
+        bulbContainer.innerHTML = ''; // 기존 전구 제거
+
+        const numBulbs = 24; // 전구 개수
+        const radius = $c.width / 2 + 15; // 캔버스 반지름 + 약간의 오프셋
+        const centerX = bulbContainer.offsetWidth / 2;
+        const centerY = bulbContainer.offsetHeight / 2;
+
+        for (let i = 0; i < numBulbs; i++) {
+            const angle = (i * 2 * Math.PI) / numBulbs;
+            const x = centerX + radius * Math.cos(angle);
+            const y = centerY + radius * Math.sin(angle);
+
+            const bulb = document.createElement('div');
+            bulb.className = `bulb ${i % 2 === 0 ? 'bulb-group-1' : 'bulb-group-2'}`;
+            bulb.style.left = `${x}px`;
+            bulb.style.top = `${y}px`;
+            bulb.style.background = bulbColors[i % bulbColors.length];
+            bulb.style.boxShadow = `0 0 10px ${bulbColors[i % bulbColors.length]}, 0 0 20px ${bulbColors[i % bulbColors.length]}`;
+
+            bulbContainer.appendChild(bulb);
         }
     }
 
@@ -127,6 +264,9 @@
 
         // 룰렛 그리기
         newMake();
+
+        // 전구 생성 (약간의 지연을 줘서 캔버스가 완전히 로드된 후 실행)
+        setTimeout(createBulbs, 100);
     }
 
     // 룰렛 그리기 함수
@@ -134,20 +274,44 @@
         const [cw, ch] = [$c.width / 2, $c.height / 2];
         const arc = (2 * Math.PI) / product.length;
 
+        // 배경 원 그리기
+        ctx.beginPath();
+        ctx.fillStyle = 'white';
+        ctx.arc(cw, ch, cw - 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.closePath();
+
+        // 룰렛 패턴 배경 (선택적)
+        ctx.save();
+        ctx.fillStyle = '#f8fafc';
+        ctx.beginPath();
+        ctx.arc(cw, ch, cw - 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.closePath();
+        ctx.restore();
+
+        // 섹션 그리기
         for (let i = 0; i < product.length; i++) {
             ctx.beginPath();
             ctx.fillStyle = colors[i % colors.length];
             ctx.moveTo(cw, ch);
-            ctx.arc(cw, ch, cw - 2, arc * i - Math.PI / 2, arc * (i + 1) - Math.PI / 2);
+            ctx.arc(cw, ch, cw - 10, arc * i - Math.PI / 2, arc * (i + 1) - Math.PI / 2);
             ctx.fill();
+            ctx.closePath();
+
+            // 섹션 테두리 (밝은색)
+            ctx.beginPath();
+            ctx.moveTo(cw, ch);
+            ctx.arc(cw, ch, cw - 10, arc * i - Math.PI / 2, arc * (i + 1) - Math.PI / 2);
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.7)";
+            ctx.lineWidth = 2;
+            ctx.stroke();
             ctx.closePath();
         }
 
-        ctx.strokeStyle = "#000";
-        ctx.lineWidth = 1;
-
-        ctx.fillStyle = "#000";
-        ctx.font = "1.8rem Pretendard";
+        // 텍스트 그리기
+        ctx.fillStyle = "#4a5568"; // 어두운 텍스트 색상
+        ctx.font = "bold 1.8rem 'Noto Sans KR'";
         ctx.textAlign = "center";
 
         for (let i = 0; i < product.length; i++) {
@@ -156,11 +320,17 @@
             ctx.save();
 
             ctx.translate(
-                cw + Math.cos(angle) * (cw - 50),
-                ch + Math.sin(angle) * (ch - 50)
+                cw + Math.cos(angle) * (cw - 70),
+                ch + Math.sin(angle) * (ch - 70)
             );
 
             ctx.rotate(angle + Math.PI / 2);
+
+            // 텍스트 그림자 추가
+            ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
+            ctx.shadowBlur = 4;
+            ctx.shadowOffsetX = 1;
+            ctx.shadowOffsetY = 1;
 
             product[i].split(" ").forEach((text, j) => {
                 ctx.fillText(text, 0, 30 * j);
@@ -169,12 +339,62 @@
             ctx.restore();
         }
 
-        ctx.fillStyle = "#000";
+        // 룰렛 외부 원
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 8;
         ctx.beginPath();
-        ctx.moveTo(cw, ch);
-        ctx.arc(cw, ch, 3, 0, Math.PI * 2);
+        ctx.arc(cw, ch, cw - 6, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.closePath();
+
+        // 룰렛 내부 원
+        ctx.fillStyle = "white";
+        ctx.beginPath();
+        ctx.arc(cw, ch, 40, 0, Math.PI * 2);
         ctx.fill();
         ctx.closePath();
+
+        // 룰렛 내부 원 테두리
+        ctx.strokeStyle = "#e2e8f0";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(cw, ch, 40, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.closePath();
+
+        // 중앙에 별 그리기
+        const drawStar = (cx, cy, spikes, outerRadius, innerRadius) => {
+            let rot = Math.PI / 2 * 3;
+            let x = cx;
+            let y = cy;
+            let step = Math.PI / spikes;
+
+            ctx.beginPath();
+            ctx.moveTo(cx, cy - outerRadius);
+
+            for (let i = 0; i < spikes; i++) {
+                x = cx + Math.cos(rot) * outerRadius;
+                y = cy + Math.sin(rot) * outerRadius;
+                ctx.lineTo(x, y);
+                rot += step;
+
+                x = cx + Math.cos(rot) * innerRadius;
+                y = cy + Math.sin(rot) * innerRadius;
+                ctx.lineTo(x, y);
+                rot += step;
+            }
+
+            ctx.lineTo(cx, cy - outerRadius);
+            ctx.closePath();
+
+            ctx.fillStyle = "#9bdcfd";
+            ctx.fill();
+            ctx.strokeStyle = "white";
+            ctx.lineWidth = 1;
+            ctx.stroke();
+        };
+
+        drawStar(cw, ch, 5, 15, 7);
     };
 
     const rotate = () => {
@@ -183,6 +403,16 @@
         $c.style.transform = `initial`;
         $c.style.transition = `initial`;
         rotateButton.classList.add('hidden');
+
+        // 룰렛 회전 중 전구 애니메이션 빠르게
+        const bulbs = document.querySelectorAll('.bulb');
+        bulbs.forEach(bulb => {
+            if (bulb.classList.contains('bulb-group-1')) {
+                bulb.style.animation = 'bulbBlink1 0.3s infinite';
+            } else {
+                bulb.style.animation = 'bulbBlink2 0.3s infinite';
+            }
+        });
 
         // 당첨 메뉴 표시
         setTimeout(() => {
@@ -194,20 +424,29 @@
             const rotate = (360 - arc * (ran + 1) + 3600) + (arc / 3);
 
             $c.style.transform = `rotate(${rotate}deg)`;
-            $c.style.transition = `2s`;
+            $c.style.transition = `2s cubic-bezier(0.2, 0.8, 0.2, 1)`;
 
-            setTimeout(() =>
-                    winnerPopup.innerHTML = `
-            <div id="dolimPopup" class="bg-[#febf00] text-white text-3xl font-bold px-8 py-6 rounded-2xl winner-popup shadow-2xl">
-                🎉 "${product[ran]}" 당첨!
-            </div>
-            `
-                , 2000);
+            setTimeout(() => {
+                // 전구 애니메이션 정상 속도로 복원
+                bulbs.forEach(bulb => {
+                    if (bulb.classList.contains('bulb-group-1')) {
+                        bulb.style.animation = 'bulbBlink1 1s infinite';
+                    } else {
+                        bulb.style.animation = 'bulbBlink2 1s infinite';
+                    }
+                });
+
+                winnerPopup.innerHTML = `
+                <div id="dolimPopup" class="bg-gradient-to-r from-orange-500 to-pink-500 text-white text-3xl font-bold px-8 py-6 rounded-2xl winner-popup shadow-2xl">
+                    🎉 "${product[ran]}" 당첨! 🎉
+                </div>
+                `;
+            }, 2000);
 
             // 버튼 다시 표시
             const rerotateButton = document.createElement('button');
             rerotateButton.textContent = '다시 설정하기';
-            rerotateButton.className = 'bg-[#febf00] py-3 px-10 text-2xl font-semibold rounded-full text-[#fff] hover:bg-[#444] hover:text-[#f9f9f9] transition duration-300 transform hover:scale-105 mt-4';
+            rerotateButton.className = "bg-[#9bdcfd] py-3 px-10 text-2xl font-semibold rounded-full text-[#fff] hover:text-[#f9f9f9] transition duration-300 transform hover:scale-105 shadow-md";
             rerotateButton.onclick = () => {
                 // 룰렛 설정 화면으로 돌아가기
                 rouletteContainer.classList.add('hidden');
