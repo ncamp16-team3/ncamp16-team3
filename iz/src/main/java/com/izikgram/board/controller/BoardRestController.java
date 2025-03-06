@@ -44,10 +44,10 @@ public class BoardRestController {
             @RequestParam(defaultValue = "10") int limit,
             @RequestParam(defaultValue = "0") int offset) {
 
-        System.out.println("boardType: " + boardType);  // 확인용 로그
-        System.out.println("sort: " + sort);
-        System.out.println("limit: " + limit);
-        System.out.println("offset: " + offset);
+//        System.out.println("boardType: " + boardType);  // 확인용 로그
+//        System.out.println("sort: " + sort);
+//        System.out.println("limit: " + limit);
+//        System.out.println("offset: " + offset);
 
         List<BoardDto> boardList = boardService.getBoardList(boardType, sort, limit, offset);
 

@@ -76,14 +76,14 @@ public class ChatService {
 
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
 
-        log.info("ChatService 요청 정보: {}", entity);
+//        log.info("ChatService 요청 정보: {}", entity);
 
         try {
             ResponseEntity<String> response = restTemplate.exchange(apiUrl, HttpMethod.POST, entity, String.class);
             String responseBody = response.getBody();
-            logger.info("Clova API 응답: {}", response.getBody());
+//            logger.info("Clova API 응답: {}", response.getBody());
             String content = extractContentFromStreamResponse(responseBody);
-            logger.info("추출된 content: {}", content);
+//            logger.info("추출된 content: {}", content);
 
             processFeelChatResponse(content, memberId);
 
@@ -110,7 +110,7 @@ public class ChatService {
         if (matcher.find()) {
             int stressNum = Integer.parseInt(matcher.group(1));
 //            result.put("stressNum", stressNum);
-            logger.info("추출된 퇴사지수(stress_num): {}", stressNum);
+//            logger.info("추출된 퇴사지수(stress_num): {}", stressNum);
 
             // DB에 저장/업데이트
             saveOrUpdateStressNum(memberId, stressNum, LocalDate.now().toString());
@@ -126,13 +126,13 @@ public class ChatService {
             if (existingStressNum != null) {
                 // 이미 존재하면 업데이트
                 usermapper.updateStressInfo(memberId, stressNum, date);
-                logger.info("기존 stress_num 업데이트 - 회원: {}, 날짜: {}, 점수: {}",
-                        memberId, date, stressNum);
+//                logger.info("기존 stress_num 업데이트 - 회원: {}, 날짜: {}, 점수: {}",
+//                        memberId, date, stressNum);
             } else {
                 // 없으면 새로 생성
                 usermapper.insertStressInfo(memberId, stressNum, date);
-                logger.info("새 stress_num 저장 - 회원: {}, 날짜: {}, 점수: {}",
-                        memberId, date, stressNum);
+//                logger.info("새 stress_num 저장 - 회원: {}, 날짜: {}, 점수: {}",
+//                        memberId, date, stressNum);
             }
         } catch (Exception e) {
             logger.error("stress_num 저장/업데이트 실패: {}", e.getMessage(), e);

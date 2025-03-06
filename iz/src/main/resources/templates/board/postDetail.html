@@ -1,6 +1,10 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/font.css}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Izikgram</title>
@@ -40,6 +44,14 @@
             #dislike {
                 width: 6em;
             }
+
+            #comment {
+                font-size: 0.875em;
+            }
+
+            #moreBtn {
+                font-size: 0.8em;
+            }
         }
 
         .on {
@@ -54,7 +66,7 @@
         }
     </style>
 </head>
-<body>
+<body class="nanum-gothic-regular">
 <div class=" flex flex-col w-full mobile-container relative bg-white rounded-lg  mx-auto">
     <div class="pt-20"><header th:replace="~{header :: header} " class="pt-4"></header></div>
     <div class="bg-white rounded-xl pb-8 pl-8 pr-8">
@@ -156,7 +168,7 @@
                             더보기
                         </button>
                     </div>
-                    <div class="w-40 text-right">
+                    <div id="comment" class="w-40 text-right">
                         <div th:if="${member_id == commentList.writer_id}">
                             <button id="dd" type="button" onclick="editComment(event)" class="text-blue-500 hover:text-blue-600 cursor-pointer">
                                 수정
