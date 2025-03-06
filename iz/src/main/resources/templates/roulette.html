@@ -39,6 +39,9 @@
                 padding: 1.5em;
                 text-align: center;
             }
+            .bulb {
+                margin-left: 15px;
+            }
         }
 
         /* 새로운 스타일 */
@@ -141,8 +144,6 @@
 </div>
 
 <div id="rouletteContainer" class="hidden mobile-container w-full max-w-4xl relative">
-    <!-- 디버그 정보 -->
-    <div id="debugInfo" class="absolute top-0 left-0 bg-white p-2 z-50 text-xs"></div>
 
     <!-- 승자 팝업 -->
     <div id="winnerPopup" class="fixed z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden"></div>
@@ -150,7 +151,7 @@
     <!-- 룰렛 래퍼 -->
     <div class="roulette-wrapper mx-auto w-fit relative">
         <!-- 전구 컨테이너 - 자바스크립트로 채워질 예정 -->
-        <div id="bulbContainer" class="absolute w-full h-full top-0 left-0 z-2"></div>
+        <div id="bulbContainer" class="absolute w-full h-full top-4 left-4 z-2"></div>
 
         <!-- 화살표 -->
         <svg id="arrow" viewBox="0 0 100 100" class="absolute top-[-1px] left-1/2 transform -translate-x-1/2 w-16 h-16 z-10" style="fill: #ff5252;">
@@ -177,7 +178,6 @@
     const ctx = $c.getContext(`2d`);
     const rotateButton = document.querySelector('#rotateButton');
     const winnerPopup = document.querySelector('#winnerPopup');
-    const debugInfo = document.getElementById('debugInfo');
     const bulbContainer = document.getElementById('bulbContainer');
 
     let product = [];
@@ -221,14 +221,18 @@
         }
     }
 
-    // 전구 생성 함수
+    // createBulbs 함수 수정 - 반응형으로 전구 위치 계산
     function createBulbs() {
         bulbContainer.innerHTML = ''; // 기존 전구 제거
 
         const numBulbs = 24; // 전구 개수
-        const radius = $c.width / 2 + 15; // 캔버스 반지름 + 약간의 오프셋
-        const centerX = bulbContainer.offsetWidth / 2;
-        const centerY = bulbContainer.offsetHeight / 2;
+        const canvas = document.querySelector('canvas');
+
+        // 현재 캔버스의 실제 표시 크기 가져오기
+        const canvasRect = canvas.getBoundingClientRect();
+        const centerX = canvasRect.width / 2;
+        const centerY = canvasRect.height / 2;
+        const radius = canvasRect.width / 2; // 캔버스 실제 표시 반지름 + 약간의 오프셋
 
         for (let i = 0; i < numBulbs; i++) {
             const angle = (i * 2 * Math.PI) / numBulbs;
@@ -246,6 +250,14 @@
         }
     }
 
+    // 창 크기가 변경될 때마다 전구 위치 업데이트
+    window.addEventListener('resize', () => {
+        if (!rouletteContainer.classList.contains('hidden')) {
+            createBulbs();
+        }
+    });
+
+    // startRoulette 함수 수정 - 전구 생성 타이밍 개선
     function startRoulette() {
         // 메뉴 입력 검증
         const inputs = document.querySelectorAll('.menu-input');
@@ -265,8 +277,10 @@
         // 룰렛 그리기
         newMake();
 
-        // 전구 생성 (약간의 지연을 줘서 캔버스가 완전히 로드된 후 실행)
-        setTimeout(createBulbs, 100);
+        // DOM이 업데이트된 후 전구 생성
+        requestAnimationFrame(() => {
+            setTimeout(createBulbs, 100);
+        });
     }
 
     // 룰렛 그리기 함수
