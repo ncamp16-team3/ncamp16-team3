@@ -16,6 +16,7 @@ public class CorsConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(
                 "http://www.izikgram.com",
+                "https://www.izikgram.com",
                 "http://223.130.151.184:8080",
                 "http://localhost:63342"
         ));
