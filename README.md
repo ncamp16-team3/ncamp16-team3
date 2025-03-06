@@ -1,15 +1,36 @@
 ## 📌 프로젝트 소개
 - 퇴사 욕구 측정 및 이직 추천 서비스 **Izikgram**은 유저와 챗봇의 대화를 통해 사용자의 감정을 분석해 ‘퇴사 욕구’를 진단하여 적합한 퇴사 시기를 제안하는 서비스입니다.
-- ‘퇴사 욕구’가 일정 수준 이상이 되면 유저가 설정한 조건에 맞는 채용 공고를 제안하여 유저의 원활한 퇴사를 돕습니다.
-- 또한, 퇴사를 원하는 유저들의 커뮤니티 제공하여 자유롭게 이야기하고, 직장에서의 스트레스를 풀어 원활한 직장 생활을 영위할 수 있도록 합니다.<br><br>
-## 🧑‍💻 팀 소개 
+- 챗봇은 유저의 원활한 직장생활을 위한 각종 정보를 제공하며, 유저가 설정한 조건에 맞는 채용 공고를 제안하여 유저의 원활한 퇴사를 돕습니다.
+- 또한, 퇴사를 원하는 유저들의 커뮤니티 제공하여 자유롭게 이야기하고, 직장에서의 스트레스를 풀어 원활한 직장 생활을 영위할 수 있도록 합니다.
+- 이 외에도 커피 내기를 위한 제비뽑기와 점심 메뉴 결정을 위한 룰렛 돌리기, 회식 장소 조사에 유용한 회사 근처 맛집 추천 등의 부가 기능으로 유저에게 소소한 재미를 제공합니다.
+<br><br>
+
+## ✨ 링크
+- 프로젝트 바로 가기 👉 [Izikgram](http://223.130.151.184:8080/)
+- 개발일지 👉 [팀삼](https://hahyeong.notion.site/Izikgram-18fe6743b89f8066a76ee74a1263287e?pvs=4)
+- 프로젝트 보고서 👉 업뎃 예정
+- 프로젝트 코드 분석 👉 업뎃 예정
+<br><br>
+
+## 🕹 주요 기능
+업뎃 예정
+<br><br>
+
+## 💻 팀 소개 
 <table>
   <tbody>
-    <th align="center">강승민</th>
+    <th align="center">🦝 강승민</th>
     <th align="center">🐹 김태현</th>
-    <th align="center">신동억</th>
-    <th align="center">🥔 임하형</th>
-    <th align="center">🐻 차기석</th>
+    <th align="center">🐔 신동억</th>
+    <th align="center">🐰 임하형(팀장)</th>
+    <th align="center">🐻 차기석(부팀장)</th>
+    <tr>
+      <td align="center"><img src="https://github.com/user-attachments/assets/32cf801f-cefa-4929-95f2-6178b88d391a"></td>
+      <td align="center"><img src="https://github.com/user-attachments/assets/52ab98d1-eddf-4f6d-8f81-e983353e2eab"></td>
+      <td align="center"><img src="https://github.com/user-attachments/assets/bd5f02cb-aafa-4ee8-b0a8-afe7c0531c1e"></td>
+      <td align="center"><img src="https://github.com/user-attachments/assets/33b71b3e-fe64-4994-a99d-94832993af9f"></td>
+      <td align="center"><img src="https://github.com/user-attachments/assets/4a5a6da6-2afd-4c02-a4e4-27690d3db5d7"></td>
+    </tr>
     <tr>
       <td align="center"><a href="https://github.com/SeungMin2055">SeungMin2055</td>
       <td align="center"><a href="https://github.com/kokiyo1030">kokiyo1030</td>
@@ -17,17 +38,35 @@
       <td align="center"><a href="https://github.com/hahyeong">hahyeong</td>
       <td align="center"><a href="https://github.com/chakisuk">chakisuk</td>
     </tr>
-      
+      <tr>
+      <td align="center">챗봇 기능 구현<br>(Hyper Clova X)<br>헤더 및 푸터 구현<br>미니게임<br>(제비뽑기, 돌림판)<br>기능 구현</td>
+      <td align="center">서버 구축<br>(Docker, NCP,<br>Github Actions)<br>Redis 담당<br>회원 관리 담당<br>(회원가입, 로그인)<br>SMS 인증 기능 구현</td>
+      <td align="center">게시판 담당<br>자유게시판 구현<br>하소연게시판 구현<br>인기게시판 구현<br>추천 및 비추천<br>기능 구현<br>댓글 기능 구현</td>
+      <td align="center">프로젝트 총괄<br>메인페이지 구현<br>챗봇페이지 구현<br>사람인 API 활용<br>채용공고 구현<br>스크랩 기능 구현<br>발표 및 시연</td>
+      <td align="center">Spring Security<br>DB Scheduler<br>회원관리 담당<br>(마이페이지 구현)<br>알람 기능 구현<br>지도 API 활용<br>맛집 추천 기능 구현</td>
+    </tr>
   </tbody>
 </table>
-<br>
+<br><br>
 
-## 📌 Coding Convention
+## 🔧 기술 스택
+![Tech Stack](https://github.com/user-attachments/assets/72d31188-7016-4cfb-8346-b32d37307f5a)
+<br><br>
+
+## 📅 총 개발 기간 2025.02.03 ~ 2025.04.09
+- **2025.02.03 ~ 2025.02.07** 👉 프로젝트 기획 및 UI 설계
+- **2025.02.08 ~ 2025.02.09** 👉 Database 설계
+- **2025.02.10 ~ 2025.03.02** 👉 프로젝트 개발
+- **2025.03.03 ~ 2025.03.07** 👉 테스트 및 오류 수정
+- **2025.03.08 ~ 2025.03.09** 👉 시연 및 발표 준비
+<br><br>
+
+## ✏ Coding Convention
 ### 함수에 대한 주석
 - 백엔드에서 공통적으로 사용하는 함수의 경우, 모듈화를 통해 하나의 파일로 관리한다.
 - 하나의 파일의 시작 부분에 주석으로 상세 내용을 작성한다.
 ### 변수명
-- Camel Case로 작성합니다.
+- Camel Case로 작성한다.
 - 의미를 파악하기 쉬운 변수명을 사용한다.
 - 웬만하면 약어는 지양하도록 한다.
 - boolean의 경으 'is', 'has', 'can'과 같은 접두어를 사용한다.
@@ -35,12 +74,12 @@
 - 함수일 경우 동사와 명사를 사용하여 `actionResource`의 형식(동사+명사)을 따르도록 한다.
 - 상수는 대문자로 표기한다.
 ### Code
-- 중괄호로 붂이지 않은 블록문은 금지한다.
+- 중괄호로 묶이지 않은 블록문은 금지한다.
 - 들여쓰기의 크기는 4-spaces로 한다.
-<br>
+<br><br>
 
-## 📌 Git Convention
-### 🔹Commit Convention
+## ⌨ Git Convention
+### Commit Convention
 - ✅ [CHORE] : 동작에 영향 없는 코드 or 변경 없는 변경사항(주석 추가 등)
 - ✨ [FEAT] : 새로운 기능 구현
 - ➕ [ADD] : Feat 이외의 부수적인 코드 추가, 라이브러리 추가, 새로운 파일 생성
@@ -51,45 +90,4 @@
 - ⏪️ [RENAME] : 파일 이름 변경시
 - ♻️ [REFACTOR] : 전면 수정
 - 🔀 [MERGE]: 다른 브랜치와 병합
-ex) `git commit -m "#{이슈번호} [FEAT] 회원가입 기능 완료"`
-<br>
-
-### 🔹Branch Convention
-- [develop] : 최종 배포
-- [feat] : 기능 추가
-- [fix] : 에러 수정, 버그 수정
-- [docs] : README, 문서
-- [refactor] : 코드 리펙토링 (기능 변경 없이 코드만 수정할 때)
-- [modify] : 코드 수정 (기능의 변화가 있을 때)
-- [chore] : gradle 세팅, 위의 것 이외에 거의 모든 것
-ex) `feat/#{이슈번호}`
-<br>
-
-### 🔹Branch Strategy
-#### 💡 Git Flow
-- 기본적으로 Git Flow 전략을 이용한다.
-- Fork한 후 나의 repository에서 작업하고 구현 후 원본 repository에 pr을 날린다.
-- 작업 시작 시 선행되어야 할 작업은 다음과 같다.
-  ```
-  1. Issue를 생성한다.
-  2. feature Branch를 생성한다.
-  3. Add - Commit - Push - Pull Request 의 과정을 거친다.
-  4. Pull Request가 작성되면 작성자 이외의 다른 팀원이 Code Review를 한다.
-  5. Code Review가 완료되면 Pull Request 작성자가 develop Branch로 merge 한다.
-  6. merge된 작업이 있을 경우, 다른 브랜치에서 작업을 진행 중이던 개발자는 본인의 브랜치로 merge된 작업을 Pull 받아온다.
-  7. 종료된 Issue와 Pull Request의 Label과 Project를 관리한다.
-  ```
-- main, develop, feature 3가지 branch 를 기본으로 합니다.
-- main → develop → feature. feature 브랜치는 feat/기능명으로 사용합니다.
-- 이슈를 사용하는 경우 브랜치명을 feature/[issue num]-[feature name]로 합니다.
-<br>
-
-### 🔹Issue Convention
-- [FEAT] : 기능 추가
-- [FIX] : 에러 수정, 버그 수정
-- [DOCS] : README, 문서
-- [REFACTOR] : 코드 리펙토링 (기능 변경 없이 코드만 수정할 때)
-- [MODIFY] : 코드 수정 (기능의 변화가 있을 때)
-- [CHORE] : gradle 세팅, 위의 것 이외에 거의 모든 것
-ex) `[feat] user api 구현`
-
+ex) `git commit -m "[FEAT] 회원가입 기능 완료"`
