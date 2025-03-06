@@ -14,9 +14,11 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://www.izikgram.com/**")); // 허용할 Origin
-        configuration.setAllowedOrigins(List.of("http://223.130.151.184:8080")); // 허용할 Origin
-        configuration.setAllowedOrigins(List.of("http://localhost:63342")); // 허용할 Origin
+        configuration.setAllowedOrigins(List.of(
+                "http://www.izikgram.com",
+                "http://223.130.151.184:8080",
+                "http://localhost:63342"
+        ));
         configuration.setAllowedMethods(List.of("GET", "POST", "OPTIONS")); // 허용할 HTTP 메서드
         configuration.setAllowedHeaders(List.of("*")); // 모든 헤더 허용
         configuration.setAllowCredentials(true); // 인증 정보 포함 허용
