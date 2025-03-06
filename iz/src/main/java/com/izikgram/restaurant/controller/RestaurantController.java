@@ -29,6 +29,7 @@ public class RestaurantController {
             @RequestParam double longitude,
             @RequestParam(defaultValue = "맛집") String category // 추가된 카테고리 파라미터
     ) throws UnsupportedEncodingException {
+
         return naverCloudMapService.searchNearbyRestaurants(
                 latitude,
                 longitude,
