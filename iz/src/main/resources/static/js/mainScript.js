@@ -256,15 +256,18 @@ function calculateTimeProgress(startTime, endTime) {
 function formatTimeRemaining(start, end) {
     const [startHour, startMinute] = start.split(':').map(Number);
     const [endHour, endMinute] = end.split(':').map(Number);
+    const [choolHour, choolMinute] = globalStartTime.split(':').map(Number);
+
     const now = new Date();
     const currentHour = now.getHours();
     const currentMinute = now.getMinutes();
 
     const endTimeMinutes = endHour * 60 + endMinute;
     const currentTimeMinutes = currentHour * 60 + currentMinute;
+    const choolTimeMinutes = choolHour * 60 + choolMinute;
 
     let remainingMinutes = endTimeMinutes - currentTimeMinutes;
-    if (remainingMinutes <= 0) return ' 완료!';
+    if (remainingMinutes <= 0 || currentTimeMinutes < (choolTimeMinutes - 30)) return ' 완료!';
 
     const hours = Math.floor(remainingMinutes / 60);
     const minutes = remainingMinutes % 60;
