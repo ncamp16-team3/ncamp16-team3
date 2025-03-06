@@ -3,6 +3,10 @@
 <!DOCTYPE html>
 <html class="h-full bg-[#f0f0f0]">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/font.css}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Izikgram</title>
@@ -86,10 +90,27 @@
         .hide-scrollbar::-webkit-scrollbar {
             display: none;
         }
+
+        @media screen and (max-width: 599px) {
+            .horizon {
+                display: flex !important;
+                align-items: center !important;
+                gap: 0.5rem !important;
+                width: 100% !important;
+            }
+
+            .horizon::before {
+                content: attr(data-label);
+                width: 100px;
+                text-align: left;
+                font-size: 0.875rem;
+                color: #4a5568;
+            }
+        }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
-<body class="mobile-container bg-[#f0f0f0]">
+<body class="nanum-gothic-regular mobile-container bg-[#f0f0f0]">
 <div class="flex flex-col w-full md:w-[600px] md:mx-auto md:shadow-md bg-white min-h-screen relative">
 
     <div class="pt-20"><header th:replace="~{header :: header} " class="pt-4"></header></div>
@@ -98,20 +119,20 @@
     <div class="px-10">
         <h1 class="text-2xl font-bold mb-6">채용공고</h1>
         <div class="flex items-center gap-2 mb-1 job-filter-container">
-            <div class="w-1/3 text-center font-semibold text-gray-700">
+            <div class="w-1/5 text-center font-semibold text-gray-700">
                 <label>근무지</label>
             </div>
-            <div class="w-1/3 text-center font-semibold text-gray-700">
+            <div class="w-2/5 text-center font-semibold text-gray-700">
                 <label>산업/업종</label>
             </div>
-            <div class="w-1/3 text-center font-semibold text-gray-700">
+            <div class="w-2/5 text-center font-semibold text-gray-700">
                 <label>학력</label>
             </div>
             <div class="w-8"></div>
         </div>
 
         <div class="flex items-center gap-4 mb-1">
-            <div class="relative flex-1" data-label="근무지">
+            <div class="w-1/5 relative horizon" data-label="근무지">
                 <select class="w-full pl-2 pr-8 py-1.5 border-b-2 border-gray-200 text-sm appearance-none bg-white cursor-pointer focus:outline-none focus:border-b-2 focus:border-gray-400 transition-colors">
                     <option th:text="${#authentication.getPrincipal().getUser().getLoc_mod}" selected></option>
                     <option value="117000">전국</option>
@@ -140,7 +161,7 @@
                 </div>
             </div>
 
-            <div class="relative flex-1" data-label="산업/업종">
+            <div class="w-2/5 relative horizon" data-label="산업/업종">
                 <select class="w-full pl-2 pr-8 py-1.5 border-b-2 border-gray-200 text-sm appearance-none bg-white cursor-pointer focus:outline-none focus:border-b-2 focus:border-gray-400 transition-colors">
                     <option th:text="${#authentication.getPrincipal().getUser().getInd_cd}" selected></option>
                     <option value="1">서비스업</option>
@@ -161,7 +182,7 @@
                 </div>
             </div>
 
-            <div class="relative flex-1" data-label="학력">
+            <div class="w-2/5 relative horizon" data-label="학력">
                 <select class="w-full pl-2 pr-8 py-1.5 border-b-2 border-gray-200 text-sm appearance-none bg-white cursor-pointer focus:outline-none focus:border-b-2 focus:border-gray-400 transition-colors">
                     <option th:text="${#authentication.getPrincipal().getUser().getEdu_lv}" selected></option>
                     <option value="0">학력무관</option>

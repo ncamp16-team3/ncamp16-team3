@@ -27,9 +27,9 @@ public class MainService {
 
     public List<Map<String, Object>> getMonthlyStress(String member_id, String date) {
         List<Map<String, Object>> stressList = mainMapper.getMonthlyStress(member_id, date);
-        System.out.println("stressList size: " + stressList.size());
+//        System.out.println("stressList size: " + stressList.size());
         for (Map<String, Object> stress : stressList) {
-            System.out.println("stress: " + stress);
+//            System.out.println("stress: " + stress);
         }
         return stressList;
     }

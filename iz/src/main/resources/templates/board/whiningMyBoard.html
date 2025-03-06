@@ -1,6 +1,10 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/font.css}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Izikgram</title>
@@ -20,7 +24,7 @@
         }
     </style>
 </head>
-<body class="mobile-container bg-[#f0f0f0]">
+<body class="nanum-gothic-regular mobile-container bg-[#f0f0f0]">
 <div class="flex flex-col w-full md:w-[600px] md:mx-auto md:shadow-md bg-white min-h-screen relative">
     <div class="pt-20"><header th:replace="~{header :: header}" class="pt-4"></header></div>
     <div class="px-10">

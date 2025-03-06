@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/font.css}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Izikgram</title>
@@ -44,7 +48,7 @@
         }
     </style>
 </head>
-<body class="h-screen overflow-hidden">
+<body class="nanum-gothic-regular h-screen overflow-hidden">
 <div class="mx-auto h-screen w-full relative overflow-hidden md:w-[600px] md:shadow-md bg-white">
 <!--    <div class="fixed top-0 z-50 w-full bg-white md:w-[600px] md:left-1/2 md:-translate-x-1/2">-->
 <!--        <header th:replace="~{header :: header}" class="pt-4"></header>-->
@@ -57,26 +61,26 @@
             <div id="messages" class="flex-1 overflow-y-auto px-4 pb-8 space-y-2 scrollbar-hide">
                 <div id="buttonGroupContainer" class="sticky top-0 z-10 bg-white border-b border-gray-100 pt-2 transition-all duration-300 overflow-hidden max-h-[200px]">
                     <button id="toggleButton" class="flex items-center justify-center w-full py-1 cursor-pointer bg-transparent border-none outline-none" onclick="toggleButtonGroup()">
-                        <svg class="w-6 h-6 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
+                        <svg class="w-6 h-6 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 3 18 9"></polyline>
                         </svg>
                     </button>
 
                     <div class="transition-all duration-300 opacity-100 transform translate-y-0">
                         <div class="flex flex-wrap gap-3 mb-2">
-                            <button onclick="stresschat()" class="bg-gray-100 text-black py-3 px-4 rounded-lg text-center text-sm cursor-pointer flex-auto min-w-fit">
+                            <button onclick="stresschat()" class="bg-gray-100 text-black py-3 px-2 rounded-lg text-center text-sm cursor-pointer flex-auto min-w-fit">
                                 오늘의 퇴사 수치
                             </button>
 <!--                            <button onclick="feelchat()" class="bg-gray-100 text-black py-3 px-4 rounded-lg text-left text-sm cursor-pointer flex-auto min-w-fit">-->
 <!--                                하소연하기-->
 <!--                            </button>-->
-                            <button onclick="paydaychat()" class="bg-gray-100 text-black py-3 px-4 rounded-lg text-center text-sm cursor-pointer flex-auto min-w-fit">
+                            <button onclick="paydaychat()" class="bg-gray-100 text-black py-3 px-2 rounded-lg text-center text-sm cursor-pointer flex-auto min-w-fit">
                                 월급일까지 남은 일수
                             </button>
-                            <button onclick="endtimechat()" class="bg-gray-100 text-black py-3 px-4 rounded-lg text-center text-sm cursor-pointer flex-auto min-w-fit">
+                            <button onclick="endtimechat()" class="bg-gray-100 text-black py-3 px-2 rounded-lg text-center text-sm cursor-pointer flex-auto min-w-fit">
                                 남은 퇴근시간
                             </button>
-                            <button id="gongGo" onclick="handleJobPostings()" class="bg-gray-100 text-black py-3 px-4 pl-9 rounded-lg text-left text-sm cursor-pointer flex-auto min-w-fit">
+                            <button id="gongGo" onclick="handleJobPostings()" class="bg-gray-100 text-black py-3 px-2 pl-8 rounded-lg text-left text-sm cursor-pointer flex-auto min-w-fit">
                                 맞춤형 이직 공고 보기
                             </button>
                         </div>

@@ -26,7 +26,7 @@ public class ChatController {
     @PostMapping("/feelchat")
     public ResponseEntity<?> feelchat(@AuthenticationPrincipal CustomUserDetails loginUser, @RequestBody ChatRequest chatRequest) {
         try {
-            log.info("chatRequest : {}", chatRequest);
+//            log.info("chatRequest : {}", chatRequest);
             String responseMessage = chatService.sendMessageToClova(chatRequest.getMessages(), loginUser.getUsername());
             return ResponseEntity.ok(new ChatResponse(responseMessage));
         } catch (RuntimeException e) {

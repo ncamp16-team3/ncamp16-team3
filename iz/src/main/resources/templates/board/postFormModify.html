@@ -1,6 +1,10 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <!DOCTYPE html>
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/font.css}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Izikgram</title>
@@ -8,7 +12,6 @@
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" th:href="@{/css/default.css}">
     <style type="text/tailwindcss">
-
         @theme {
             --color-main-sky-highlight: #00a3ed;
             --color-main-sky-basic: #9bdcfd;
@@ -17,9 +20,20 @@
             --color-main-yellow-highlight: #fbc159ff;
             --color-main-yellow-basic: #fdd391;
         }
+
+        @media screen and (max-width: 599px) {
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                padding-left: 3em;
+                padding-right: 3em;
+            }
+        }
     </style>
 </head>
-<body>
+<body class="nanum-gothic-regular">
 <div class="flex flex-col w-full mobile-container relative bg-white rounded-lg mx-auto">
     <div class="pt-20"><header th:replace="~{header :: header} " class="pt-4"></header></div>
     <div class="p-6">
@@ -35,10 +49,10 @@
 
             <div class="flex justify-center text-right mt-10 my-5 gap-6">
                 <button type="submit" class="md:px-20 md:py-4 px-15 py-4  bg-main-sky-highlight text-white font-semibold
-                                rounded-xl hover:bg-main-sky-basic transition-all cursor-pointer">
+                                rounded-xl hover:bg-main-sky-basic transition-all cursor-pointer btn">
                     수정
                 </button>
-                <a href="javascript:history.back()" class="md:px-20 md:py-4 px-15 py-4 bg-gray-300 rounded hover:bg-main-sky-basic text-white rounded-xl cursor-pointer">
+                <a href="javascript:history.back()" class="md:px-20 md:py-4 px-15 py-4 bg-gray-300 rounded hover:bg-main-sky-basic text-white rounded-xl cursor-pointer btn">
                     취소
                 </a>
             </div>
