@@ -258,7 +258,7 @@ function CloseUpdateModal() {
 function editComment(event) {
     const button = event.target;
     const commentDiv = button.closest('.idBoard');
-    const moreButton = commentDiv.querySelector('#moreBtn'); // 해당 댓글 내의 moreBtn 찾기
+    const moreButton = commentDiv.querySelector('#moreBtn');
 
 
     if (!commentDiv) {
