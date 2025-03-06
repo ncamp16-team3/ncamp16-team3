@@ -390,8 +390,8 @@ public class BoardService {
     //내가 작성한 게시글 5개 보여주기
     public Map<String, List<BoardDto>> getMyBoardList(String writer_id){
         Map<String, List<BoardDto>> map = new HashMap<>();
-        List<BoardDto> myBoardList01 = boardMapper.getMyBoardList01(writer_id);
-        List<BoardDto> myBoardList02 = boardMapper.getMyBoardList02(writer_id);
+        List<BoardDto> myBoardList01 = boardMapper.getMyBoardList01(writer_id,10, 0);
+        List<BoardDto> myBoardList02 = boardMapper.getMyBoardList02(writer_id, 10, 0);
 
         myBoardList01 = (myBoardList01.size() > 5) ? myBoardList01.subList(0, 5) : myBoardList01;
         myBoardList02 = (myBoardList02.size() > 5) ? myBoardList02.subList(0, 5) : myBoardList02;
@@ -402,27 +402,24 @@ public class BoardService {
         return map;
     }
 
-    public Map<String, List<BoardDto>> getMyBoardList02(String writer_id){
-        Map<String, List<BoardDto>> map = new HashMap<>();
-        List<BoardDto> myBoardList01 = boardMapper.getMyBoardList01(writer_id);
-        List<BoardDto> myBoardList02 = boardMapper.getMyBoardList02(writer_id);
-
-        map.put("myBoardList01", myBoardList01);
-        map.put("myBoardList02", myBoardList02);
-
-        return map;
+    // 컨트롤러에서 필요한 새 메서드 추가
+    public List<BoardDto> myBoardList01(String writer_id, int limit, int offset){
+        return boardMapper.getMyBoardList01(writer_id, limit, offset);
     }
-
+    // 컨트롤러에서 필요한 새 메서드 추가
+    public List<BoardDto> myBoardList02(String writer_id, int limit, int offset){
+        return boardMapper.getMyBoardList02(writer_id, limit, offset);
+    }
 
     // 댓글 수정
     public int updateComment(CommentDto commentDto) {
         int boardType = commentDto.getBoard_type();
 
-        if (boardType == 1) {  // 자유게시판
+        if (boardType == 1) {
             return boardMapper.updateComment01(commentDto.getComment_content(),
                     commentDto.getBoard_id(),
                     commentDto.getComment_id());
-        } else if (boardType == 2) {  // 하소연 게시판
+        } else if (boardType == 2) {
             return boardMapper.updateComment02(commentDto.getComment_content(),
                     commentDto.getBoard_id(),
                     commentDto.getComment_id());

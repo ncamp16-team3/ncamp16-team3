@@ -71,6 +71,7 @@
                 </div>
             </div>
         </div>
+        <div id="bottomObserver" class="py-4 text-center text-gray-400"></div>
 
         <!-- 게시글이 없을 때 메시지 -->
         <div th:if="${#lists.isEmpty(myBoardList01)}" class="p-10 text-center text-gray-500">
@@ -110,6 +111,142 @@
             return `방금 전`;
         }
     }
+
+    // 무한 스크롤 변수 초기화
+    let offset = 10; // 초기 데이터는 이미 10개 로드됨
+    const limit = 5; // 추가로 5개씩 로드
+    let loading = false;
+    let allLoaded = false; // 모든 데이터가 로드되었는지 확인하는 플래그
+
+    // Intersection Observer 설정
+    const observerOptions = {
+        root: null, // 뷰포트를 root로 사용
+        rootMargin: '0px',
+        threshold: 0.1 // 요소의 10%가 보이면 콜백 실행
+    };
+
+    // Observer 콜백 함수
+    const observerCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !loading && !allLoaded) {
+                loadMorePosts();
+            }
+        });
+    };
+
+    // Observer 생성
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // 추가 게시글 로드 함수
+    function loadMorePosts() {
+        loading = true;
+
+        // 로딩 표시기가 없으면 추가
+        if($("#loading-indicator").length === 0) {
+            $("#bottomObserver").before('<div id="loading-indicator" class="text-center py-4">로딩 중...</div>');
+        } else {
+            $("#loading-indicator").show();
+        }
+
+        // AJAX 요청
+        $.ajax({
+            url: "/board/api/myBoard/free",
+            type: "GET",
+            data: {
+                offset: offset,
+                limit: limit
+            },
+            success: function(data) {
+                // 로딩 표시기 숨기기
+                $("#loading-indicator").hide();
+
+                // 데이터가 없으면 로딩 중단
+                if(data.length === 0) {
+                    $("#loading-indicator").text("더 이상 게시글이 없습니다").show();
+                    allLoaded = true;
+                    return;
+                }
+
+                // 각 게시글을 화면에 추가
+                data.forEach(function(post) {
+                    // 현재 HTML 구조와 동일한 형식으로 게시글 추가
+                    const postHtml = `
+                <div class="rounded-lg">
+                    <div class="flex flex-col w-full">
+                        <div class="flex border-b border-gray-300 p-4 cursor-pointer hover:bg-gray-50"
+                             onclick="location.href='/board/${post.board_type}/${post.board_id}'">
+                            <div class="flex-1 pr-6">
+                                <div class="flex items-center gap-2">
+                                    <span class="inline-block w-40 truncate text-xl">
+                                        ${post.title}
+                                    </span>
+                                </div>
+                                <p class="my-1 text-sm w-40 truncate">${post.content}</p>
+                                <span class="text-xs reg_date" data-reg-date="${post.reg_date}">${timeAgo(post.reg_date)}</span>
+                            </div>
+                            <div>
+                                <div class="flex flex-col items-end">
+                                    <div class="flex items-center">
+                                        <img src="https://img.icons8.com/?size=100&id=82788&format=png&color=000000"
+                                             alt="like" class="w-5 h-5">
+                                        <span class="min-w-[24px] text-right text-main-red-highlight">${post.like_count}</span>
+                                    </div>
+                                    <div class="flex justify-between items-center w-full">
+                                        <img src="https://img.icons8.com/?size=100&id=82788&format=png&color=000000"
+                                             alt="dislike" class="w-5 h-5 rotate-180 inline-block transform">
+                                        <span class="min-w-[24px] text-right text-main-sky-highlight">${post.dislike_count}</span>
+                                    </div>
+                                    <div class="flex justify-between items-center w-full">
+                                        <img src="https://img.icons8.com/?size=100&id=uMrGly1lK1sv&format=png&color=000000"
+                                             alt="comments" class="w-5 h-5">
+                                        <span class="min-w-[24px] text-right">${post.comment_count}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+
+                    // 게시글 목록에 추가 (observer 요소 앞에)
+                    $("#bottomObserver").before(postHtml);
+                });
+
+                // 새로 추가된 게시글의 reg_date를 처리
+                $(".reg_date").each((a, b) => {
+                    if (!$(b).text()) {
+                        const regDate = $(b).data('reg-date');
+                        const timeAgoText = timeAgo(regDate);
+                        $(b).text(timeAgoText);
+                    }
+                });
+
+                // 다음 데이터를 위해 offset 업데이트
+                offset += data.length;
+                loading = false;
+            },
+            error: function(xhr, status, error) {
+                console.error("데이터를 불러오는 중 오류가 발생했습니다:", error);
+                $("#loading-indicator").text("오류가 발생했습니다. 다시 시도해주세요.").show();
+                loading = false;
+            }
+        });
+    }
+
+    // 페이지 로드 시 Observer 설정
+    $(document).ready(function() {
+        // 기존 코드 유지
+        const regDateList = $(".reg_date");
+        $(regDateList).each((a, b) => {
+            const regDate = $(b).data('reg-date');
+            const timeAgoText = timeAgo(regDate);
+            $(b).text(timeAgoText);
+        });
+
+        // Observer 시작
+        const bottomElement = document.getElementById('bottomObserver');
+        if (bottomElement) observer.observe(bottomElement);
+    });
 </script>
 </body>
 </html>

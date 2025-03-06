@@ -25,18 +25,13 @@ public class  BoardController {
 
     //자유,하소연 게시판 리스트
     @GetMapping("/{board_type}")
-    public String getBoardList(
-            @PathVariable("board_type") int boardType,
-            @RequestParam(defaultValue = "newest") String sort,
-            Model model) {
+    public String getBoardList(@PathVariable("board_type") int boardType,
+                               Model model) {
 
-//        List<BoardDto> boardList = boardService.getBoardList(boardType,sort);
         String board_name = boardService.findBoardName(boardType);
 
-//        model.addAttribute("listBoard", boardList);
         model.addAttribute("board_type", boardType);
         model.addAttribute("board_name", board_name);
-//        model.addAttribute("sort"); // 정렬 정보도 전달
 
         return "board/community";
     }
@@ -187,7 +182,7 @@ public class  BoardController {
         return "board/popularityCommunity";
     }
 
-    // 내가 작성한 게시글 리스트
+    // 내가 작성한 자유/하소연 게시글 리스트
     @GetMapping("/myboard")
     public String myBoard( @AuthenticationPrincipal CustomUserDetails userDetails,
                            Model model){
@@ -209,16 +204,28 @@ public class  BoardController {
     @GetMapping("/myBoard/freeMyBoard")
     public String freeMyBoard(@AuthenticationPrincipal CustomUserDetails userDetails,
                               Model model){
-
         User user = userDetails.getUser();
         String writer_id = user.getMember_id();
 
-        Map<String, List<BoardDto>> MyBoardList = boardService.getMyBoardList02(writer_id);
-        List<BoardDto> myBoardList01 = MyBoardList.get("myBoardList01");
 
-        model.addAttribute("myBoardList01",myBoardList01);
+        List<BoardDto> initialBoardList = boardService.myBoardList01(writer_id, 10, 0);
+
+        model.addAttribute("myBoardList01", initialBoardList);
+        model.addAttribute("writer_id", writer_id); // JavaScript에서 사용하기 위해 추가
 
         return "board/freeMyBoard";
+    }
+
+    // 내가 작성한 자유게시글 리스트 추가데이터
+    @GetMapping("/api/myBoard/free")
+    @ResponseBody
+    public List<BoardDto> getMoreFreeBoards(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                            @RequestParam int offset,
+                                            @RequestParam int limit) {
+        User user = userDetails.getUser();
+        String writer_id = user.getMember_id();
+
+        return boardService.myBoardList01(writer_id, limit, offset);
     }
 
     // 내가 작성한 하소연게시글 리스트
@@ -229,12 +236,25 @@ public class  BoardController {
         User user = userDetails.getUser();
         String writer_id = user.getMember_id();
 
-        Map<String, List<BoardDto>> MyBoardList = boardService.getMyBoardList02(writer_id);
-        List<BoardDto> myBoardList02 = MyBoardList.get("myBoardList02");
+        List<BoardDto> MyBoardList = boardService.myBoardList02(writer_id,10,0);
 
-        model.addAttribute("myBoardList02",myBoardList02);
+
+        model.addAttribute("myBoardList02", MyBoardList);
+        model.addAttribute("writer_id", writer_id); // JavaScript에서 사용하기 위해 추가
 
         return "board/whiningMyBoard";
+    }
+
+    // 내가 작성한 하소연게시글 리스트 추가데이터
+    @GetMapping("/api/myBoard/whining")
+    @ResponseBody
+    public List<BoardDto> getMoreWhiningBoards(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                               @RequestParam int offset,
+                                               @RequestParam int limit) {
+        User user = userDetails.getUser();
+        String writer_id = user.getMember_id();
+
+        return boardService.myBoardList02(writer_id, limit, offset);
     }
 
     // 게시글 삭제

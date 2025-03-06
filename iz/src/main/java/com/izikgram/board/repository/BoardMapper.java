@@ -37,8 +37,8 @@ public interface BoardMapper {
     List<BoardDto> getBoardList(
             @Param("board_type") int board_type,
             @Param("sort") String sort,
-            @Param("limit") int limit,   // 한 번에 가져올 게시글 개수
-            @Param("offset") int offset  // 시작 위치
+            @Param("limit") int limit,
+            @Param("offset") int offset
     );
 
     // 글작성
@@ -299,8 +299,11 @@ public interface BoardMapper {
             "LEFT JOIN iz_board01_comment c ON b.board_id = c.board_id " +
             "WHERE b.writer_id = #{writer_id}  " +
             "GROUP BY b.board_id " +
-            "ORDER BY  reg_date desc")
-    List<BoardDto> getMyBoardList01(@Param("writer_id") String writer_id);
+            "ORDER BY reg_date DESC " +
+            "LIMIT #{limit} OFFSET #{offset}")
+    List<BoardDto> getMyBoardList01(@Param("writer_id") String writer_id,
+                                    @Param("limit") int limit,
+                                    @Param("offset") int offset);
 
     @Select("SELECT b.*, " +
             "COALESCE(COUNT(c.comment_id), 0) AS comment_count " +
@@ -309,17 +312,20 @@ public interface BoardMapper {
             "LEFT JOIN iz_board02_comment c ON b.board_id = c.board_id " +
             "WHERE b.writer_id = #{writer_id}  " +
             "GROUP BY b.board_id " +
-            "ORDER BY  reg_date desc")
-    List<BoardDto> getMyBoardList02(@Param("writer_id") String writer_id);
+            "ORDER BY reg_date DESC " +
+            "LIMIT #{limit} OFFSET #{offset}")
+    List<BoardDto> getMyBoardList02(@Param("writer_id") String writer_id,
+                                    @Param("limit") int limit,
+                                    @Param("offset") int offset);
 
     //댓글 삭제
     @Delete("delete from iz_board01_comment " +
             "where comment_id = #{comment_id} and board_id = #{board_id}")
-    void deleteComment01(@Param("board_id") int boardId,@Param("comment_id") int commentId);
+    void deleteComment01(@Param("board_id") int boardId, @Param("comment_id") int commentId);
 
     @Delete("delete from iz_board02_comment " +
             "where comment_id = #{comment_id} and board_id = #{board_id}")
-    void deleteComment02(@Param("board_id") int boardId,@Param("comment_id") int commentId);
+    void deleteComment02(@Param("board_id") int boardId, @Param("comment_id") int commentId);
 
     //댓글 수정
     @Update("update iz_board01_comment set comment_content = #{comment_content}" +
