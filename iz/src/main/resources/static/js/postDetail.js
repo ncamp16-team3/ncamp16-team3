@@ -299,7 +299,7 @@ function editComment(event) {
 
 
     function adjustHeight() {
-        inputField.style.height = '40px';
+        inputField.style.height = '1.7erm';
         inputField.style.height = inputField.scrollHeight + 'px';
     }
 

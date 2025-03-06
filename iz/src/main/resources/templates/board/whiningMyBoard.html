@@ -134,14 +134,13 @@
         });
     };
 
-    // Observer 생성
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
     // 추가 게시글 로드 함수
     function loadMorePosts() {
         loading = true;
 
-        // 로딩 표시기가 없으면 추가
+
         if($("#loading-indicator").length === 0) {
             $("#bottomObserver").before('<div id="loading-indicator" class="text-center py-4">로딩 중...</div>');
         } else {
@@ -167,9 +166,7 @@
                     return;
                 }
 
-                // 각 게시글을 화면에 추가
                 data.forEach(function(post) {
-                    // 현재 HTML 구조와 동일한 형식으로 게시글 추가
                     const postHtml = `
                 <div class="rounded-lg">
                     <div class="flex flex-col w-full">
@@ -208,11 +205,9 @@
                 </div>
                 `;
 
-                    // 게시글 목록에 추가 (observer 요소 앞에)
                     $("#bottomObserver").before(postHtml);
                 });
 
-                // 새로 추가된 게시글의 reg_date를 처리
                 $(".reg_date").each((a, b) => {
                     if (!$(b).text()) {
                         const regDate = $(b).data('reg-date');
@@ -221,7 +216,6 @@
                     }
                 });
 
-                // 다음 데이터를 위해 offset 업데이트
                 offset += data.length;
                 loading = false;
             },
@@ -233,9 +227,7 @@
         });
     }
 
-    // 페이지 로드 시 Observer 설정
     $(document).ready(function() {
-        // 기존 코드 유지
         const regDateList = $(".reg_date");
         $(regDateList).each((a, b) => {
             const regDate = $(b).data('reg-date');
@@ -243,7 +235,6 @@
             $(b).text(timeAgoText);
         });
 
-        // Observer 시작
         const bottomElement = document.getElementById('bottomObserver');
         if (bottomElement) observer.observe(bottomElement);
     });

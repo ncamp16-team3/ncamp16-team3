@@ -91,9 +91,9 @@
             if (entry.isIntersecting && !loading && !allLoaded) {
                 loadMorePosts();
             }
-        }, {threshold: 0.1}); // 10% 이상 보일 때 감지
+        }, {threshold: 0.1});
 
-        // 옵저버 시작
+
         const bottomElement = document.getElementById('bottomObserver');
         if (bottomElement) observer.observe(bottomElement);
     });
