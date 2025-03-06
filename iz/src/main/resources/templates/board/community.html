@@ -56,6 +56,7 @@
             <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-main-sky-highlight border-r-transparent"></div>
         </div>
         <div id="bottomObserver" class="h-1 w-full"></div>
+
         <footer th:replace="~{footer :: footer}" class="pt-4 w-full"></footer>
     </div>
 </div>
@@ -88,6 +89,7 @@
             $('#boardList01').empty();
             offset = 0;
             allLoaded = false;
+            $("#bottomObserver").next('.no-more-posts').remove(); // 중복된 메시지 제거
         }
 
         currentSort = sort;
@@ -116,19 +118,20 @@
                     renderNewPosts(data.boardList);
                     offset += data.boardList.length;
 
-                    // 받아온 데이터가 요청한 크기보다 작으면 더 이상 데이터가 없는 것
                     if (data.boardList.length < limit) {
+                        $("#bottomObserver").after('<div class="text-center py-4 text-gray-500 no-more-posts">더 이상 게시글이 없습니다.</div>');
                         allLoaded = true;
                     }
                 } else {
-                    // 데이터가 없거나 비어있는 경우
                     if (offset === 0) {
                         $('#boardList01').html(`
-                        <div class="p-10 text-center text-gray-500">
-                            게시판에 글이 없습니다.
-                        </div>
-                    `);
+                <div class="p-10 text-center text-gray-500">
+                    게시판에 글이 없습니다.
+                </div>
+            `);
                     }
+                    $("#bottomObserver").next('.no-more-posts').remove(); // 기존 메시지 제거
+                    $("#bottomObserver").after('<div class="text-center py-4 text-gray-500 no-more-posts">더 이상 게시글이 없습니다.</div>');
                     allLoaded = true;
                 }
             },
