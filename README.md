@@ -7,7 +7,7 @@
 
 ## ✨ 링크
 - 프로젝트 바로 가기 👉 [Izikgram](http://223.130.151.184:8080/)
-- 개발일지 👉 [팀삼](https://hahyeong.notion.site/Izikgram-18fe6743b89f8066a76ee74a1263287e?pvs=4)
+- 프로젝트 제안서 👉 [이직그램_프로젝트 제안서](https://hahyeong.notion.site/Izikgram-18fe6743b89f81658a6cf1d00b06f4ef?pvs=4)
 - 프로젝트 보고서 👉 업뎃 예정
 - 프로젝트 코드 분석 👉 업뎃 예정
 <br><br>
