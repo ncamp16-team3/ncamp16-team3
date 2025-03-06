@@ -67,11 +67,13 @@
         </div>
         <div id="bottomObserver" class="py-4 text-center text-gray-400"></div>
 
+
         <!-- 게시글이 없을 때 메시지 -->
         <div th:if="${#lists.isEmpty(myBoardList02)}" class="p-10 text-center text-gray-500">
             <p>작성한 게시글이 없습니다.</p>
         </div>
     </div>
+
     <footer th:replace="~{footer :: footer}" class="pt-4"></footer>
 </div>
 
@@ -154,9 +156,9 @@
                 // 로딩 표시기 숨기기
                 $("#loading-indicator").hide();
 
-                // 데이터가 없으면 로딩 중단
-                if(data.length === 0) {
-                    $("#loading-indicator").text("더 이상 게시글이 없습니다").show();
+                // 데이터가 없으면 로딩 중단 및 메시지 표시
+                if (data.length === 0) {
+                    $("#bottomObserver").after('<div class="text-center py-4 text-gray-500">더 이상 게시글이 없습니다.</div>');
                     allLoaded = true;
                     return;
                 }

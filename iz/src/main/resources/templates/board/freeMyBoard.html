@@ -160,9 +160,8 @@
                 // 로딩 표시기 숨기기
                 $("#loading-indicator").hide();
 
-                // 데이터가 없으면 로딩 중단
-                if(data.length === 0) {
-                    $("#loading-indicator").text("더 이상 게시글이 없습니다").show();
+                if (data.length === 0) {
+                    $("#bottomObserver").after('<div class="text-center py-4 text-gray-500">더 이상 게시글이 없습니다.</div>');
                     allLoaded = true;
                     return;
                 }
