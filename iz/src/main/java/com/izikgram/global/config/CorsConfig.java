@@ -20,7 +20,7 @@ public class CorsConfig {
                 "http://223.130.151.184:8080",
                 "http://localhost:63342"
         ));
-        configuration.setAllowedMethods(List.of("GET", "POST", "OPTIONS")); // 허용할 HTTP 메서드
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT","DELETE","OPTIONS")); // 허용할 HTTP 메서드
         configuration.setAllowedHeaders(List.of("*")); // 모든 헤더 허용
         configuration.setAllowCredentials(true); // 인증 정보 포함 허용
 

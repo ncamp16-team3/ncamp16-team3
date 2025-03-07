@@ -197,7 +197,6 @@
 
         // 서버에서 "subscribe" 이벤트 처리 (SSE 연결 확인 용도)
         eventSource.addEventListener('subscribe', function(event) {
-            console.log("SSE 구독 성공:", event.data);
         });
 
         // 서버에서 온 이벤트 핸들러들...
@@ -219,16 +218,11 @@
             document.body.appendChild(messageElement);
         });
 
-        eventSource.onopen = function() {
-            console.log("SSE 연결 성공");
-        };
 
         eventSource.onerror = function(error) {
-            console.error("SSE 연결 끊김", error);
 
             // 연결이 닫혔는지 확인 후 재연결
             if (eventSource.readyState === EventSource.CLOSED) {
-                console.log("3초 후 SSE 재연결 시도...");
                 eventSource.close(); // 오류 시 연결을 닫음
                 setTimeout(connectSSE, 3000); // 3초 후 재연결
             }
@@ -248,8 +242,6 @@
         currentAlarmId = button.getAttribute("data-alarm-id");
         currentAlarmType = button.getAttribute("data-alarm-type") || "SCRAP";
         currentAlarmElement = button.closest('.alarm-item') || button.parentNode.closest('.alarm-item');
-
-        console.log("선택된 알림 ID:", currentAlarmId);
 
         // 모달 표시
         document.getElementById('alarmDeleteModal').classList.remove('hidden');
