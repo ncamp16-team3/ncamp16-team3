@@ -7,14 +7,10 @@
 <br><br>
 
 ## ✨ 링크
-- 프로젝트 바로 가기 👉 [Izikgram](http://223.130.151.184:8080/)
-- 프로젝트 제안서 👉 [이직그램_프로젝트 제안서](https://hahyeong.notion.site/Izikgram-18fe6743b89f81658a6cf1d00b06f4ef?pvs=4)
-- 프로젝트 보고서 👉 업뎃 예정
+- 프로젝트 바로 가기 👉 <https://www.izikgram.com/>
+- 프로젝트 제안서 👉 [프로젝트 이직그램_제안서](https://hahyeong.notion.site/Izikgram-18fe6743b89f81658a6cf1d00b06f4ef?pvs=4)
+- 프로젝트 보고서 👉 [프로젝트 이직그램 보고서.pdf](https://github.com/user-attachments/files/19117758/default.pdf)
 - 프로젝트 코드 분석 👉 업뎃 예정
-<br><br>
-
-## 🕹 주요 기능
-업뎃 예정
 <br><br>
 
 ## 💻 팀 소개 
@@ -51,7 +47,7 @@
 <br><br>
 
 ## 🔧 기술 스택
-![Tech Stack](https://github.com/user-attachments/assets/72d31188-7016-4cfb-8346-b32d37307f5a)
+![Tech Stack Architecture](https://github.com/user-attachments/assets/9148e2a3-3954-484d-8504-52bbc81c79b3)
 <br><br>
 
 ## 📅 총 개발 기간 2025.02.03 ~ 2025.04.09
