@@ -80,7 +80,6 @@ public class SseEmitterService {
         } catch (IOException e) {
             // SSE 연결이 끊어졌다면 해당 사용자 제거
             sseEmitterRepository.remove(member_id);
-            System.out.println("SSE 연결 끊김 : " + member_id);
         }
     }
 
@@ -101,7 +100,6 @@ public class SseEmitterService {
         } catch (IOException e) {
             // SSE 연결이 끊어졌다면 해당 사용자 제거
             sseEmitterRepository.remove(member_id);
-            System.out.println("SSE 연결 끊김 : " + member_id);
         }
     }
 }

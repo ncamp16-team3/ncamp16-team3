@@ -44,10 +44,6 @@ public class AlarmService {
         return alarmMapper.countPopularAlarm(board_id) > 0;
     }
 
-//    public boolean hasScarpAlarm(String job_rec_id) {
-//        return alarmMapper.countScrapAlarm(job_rec_id) > 0;
-//    }
-
     public int countTotalAlarm(String member_id) {
         return alarmMapper.countTotalAlarm(member_id);
     }
