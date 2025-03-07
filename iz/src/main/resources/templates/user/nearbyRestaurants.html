@@ -148,32 +148,6 @@
         });
     });
 
-    // document.addEventListener('DOMContentLoaded', function() {
-    //     if ("geolocation" in navigator) {
-    //         navigator.geolocation.getCurrentPosition(
-    //             function(position) {
-    //                 userLatitude = position.coords.latitude;
-    //                 userLongitude = position.coords.longitude;
-    //
-    //                 searchRestaurants();
-    //             },
-    //             function(error) {
-    //                 document.getElementById('restaurantList').innerHTML =
-    //                     '<p class="error">위치 정보를 가져올 수 없습니다. 위치 권한을 확인해주세요.</p>';
-    //                 resolve({
-    //                     latitude: 37.4979,
-    //                     longitude: 127.0276
-    //                 });
-    //             },
-    //             { timeout: 10000, enableHighAccuracy: true }
-    //         );
-    //     } else {
-    //         document.getElementById('restaurantList').innerHTML =
-    //             '<p class="error">이 브라우저는 위치 정보를 지원하지 않습니다.</p>';
-    //     }
-    // });
-
-    /* 더미 위치 (비트캠프 위치) */
     document.addEventListener('DOMContentLoaded', function() {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(
@@ -186,26 +160,19 @@
                 function(error) {
                     document.getElementById('restaurantList').innerHTML =
                         '<p class="error">위치 정보를 가져올 수 없습니다. 위치 권한을 확인해주세요.</p>';
-
-                    userLatitude = 37.499420927003044;
-                    userLongitude = 127.02903836296426;
-
-                    // 기본 위치로 검색 실행
-                    searchRestaurants();
+                    resolve({
+                        latitude: 37.4979,
+                        longitude: 127.0276
+                    });
                 },
                 { timeout: 10000, enableHighAccuracy: true }
             );
         } else {
             document.getElementById('restaurantList').innerHTML =
                 '<p class="error">이 브라우저는 위치 정보를 지원하지 않습니다.</p>';
-
-            userLatitude = 37.499420927003044;
-            userLongitude = 127.02903836296426;
-
-            // 기본 위치로 검색 실행
-            searchRestaurants();
         }
     });
+
 
     function searchRestaurants() {
         if (!userLatitude || !userLongitude) {
