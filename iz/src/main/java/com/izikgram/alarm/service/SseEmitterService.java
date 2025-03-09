@@ -72,9 +72,6 @@ public class SseEmitterService {
         SseEmitter sseEmitter = sseEmitterRepository.findByMemberId(member_id);
 
         try {
-            // 연결이 살아있는지 확인하기 위해 PING 이벤트 전송
-            sseEmitter.send(SseEmitter.event().comment("ping"));
-
             // SSE를 통해 스크랩 알림 전송
             sseEmitter.send(SseEmitter.event().name("scrap-message").data(content));
         } catch (IOException e) {
@@ -92,9 +89,6 @@ public class SseEmitterService {
         SseEmitter sseEmitter = sseEmitterRepository.findByMemberId(member_id);
 
         try {
-            // 연결이 살아있는지 확인하기 위해 PING 이벤트 전송
-            sseEmitter.send(SseEmitter.event().comment("ping"));
-
             // SSE를 통해 스크랩 알림 전송
             sseEmitter.send(SseEmitter.event().name("scrap-expiration-message").data(content));
         } catch (IOException e) {
