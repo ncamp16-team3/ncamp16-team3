@@ -188,11 +188,11 @@
 <script>
     function connectSSE() {
         // 서버의 SSE 엔드포인트와 연결
-        const baseUrl = window.location.hostname === 'localhost' ?
-            'http://localhost:8080' : // 로컬용
-            'http://223.130.151.184:8080'; // 서버용
+        // const baseUrl = window.location.hostname === 'localhost' ?
+        //     'http://localhost:8080' : // 로컬용
+        //     'http://223.130.151.184:8080'; // 서버용
 
-        const eventSource = new EventSource(`${baseUrl}/subscribe`);
+        const eventSource = new EventSource('/subscribe');
 
 
         // 서버에서 "subscribe" 이벤트 처리 (SSE 연결 확인 용도)
