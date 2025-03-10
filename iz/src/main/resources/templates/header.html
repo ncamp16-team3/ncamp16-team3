@@ -131,12 +131,24 @@
                 //     chatbotIcon.style.zIndex = '50';
                 // }
 
+                // 돌림판 화살표 z-index 복원
+                let arrowIcon = document.querySelector('#arrow');
+                let winnerPopup = document.querySelector('#winnerPopup');
+
                 setTimeout(function() {
                     target.style.display = 'none';
                 }, 300); // 트랜지션 시간 후에 display none 설정
 
                 setTimeout(function() {
                     chatbotIcon.style.zIndex = '50';
+                }, 300);
+
+                setTimeout(function() {
+                    arrowIcon.style.zIndex = '50';
+                }, 300);
+
+                setTimeout(function() {
+                    winnerPopup.style.zIndex = '50';
                 }, 300);
             }
 
@@ -157,6 +169,18 @@
                 let chatbotIcon = document.querySelector('.fixed.bottom-5.right-5, #chatbotIcon');
                 if (chatbotIcon) {
                     chatbotIcon.style.zIndex = '1'; // 사이드바의 z-index(50)보다 확실히 낮게 설정
+                }
+
+                // 룰렛 화살표 z-index 낮추기
+                let arrowIcon = document.querySelector('#arrow');
+                if (arrowIcon) {
+                    arrowIcon.style.zIndex = '5';
+                }
+
+                // 룰렛 팝업 z-index 낮추기
+                let winnerPopup = document.querySelector('#winnerPopup');
+                if (winnerPopup) {
+                    winnerPopup.style.zIndex = '5';
                 }
 
                 // 사이드바 높이를 화면 높이에 맞게 조정
