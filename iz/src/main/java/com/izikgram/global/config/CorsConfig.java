@@ -15,9 +15,8 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of(
-                "http://www.izikgram.com",
                 "https://www.izikgram.com",
-                "http://223.130.151.184:8080",
+                "https://izikgram.com",
                 "http://localhost:63342"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")); // 허용할 HTTP 메서드
