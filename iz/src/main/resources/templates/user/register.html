@@ -175,28 +175,28 @@
 
             <div id="timeDiv1" class="flex justify-between">
                 <div class="flex">
-                    <label id="paydayLabel" for="payday" class="text-s w-20 max-w-12 text-bold-text mr-5">월급날</label>
-                    <select id="payday" name="payday" class="mt-0.5 w-22 max-h-5 rounded-md text-bold-text text-right outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500">
+                    <label id="paydayLabel" for="payday" class="mt-1 text-s w-20 max-w-12 text-bold-text mr-5">월급날</label>
+                    <select id="payday" name="payday" class="p-0.5 text-right mt-0.5 w-22 rounded-md text-bold-text text-right outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500">
                         <option th:each="i : ${#numbers.sequence(1, 31)}" th:value="${i}" th:text="${i + '일'}"></option>
                     </select>
                 </div>
                 <div class="flex">
-                    <label for="start_time" class="text-s w-17 text-bold-text ml-2">출근시간</label>
-                    <input type="text" name="start_time" id="start_time" th:value="${'09:00 AM'}" class="mt-0.5 p-1 time_element w-22 h-5 rounded-md text-bold-text text-right outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500">
+                    <label for="start_time" class="mt-1 text-s w-17 text-bold-text ml-2">출근시간</label>
+                    <input type="text" name="start_time" id="start_time" th:value="${'09:00 AM'}" class="p-0.5 mt-0.5 time_element w-22 rounded-md text-bold-text text-right outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500">
                 </div>
             </div>
 
             <div id="timeDiv2" class="flex relative">
                 <div id="timeDiv2_div" class="flex">
                     <div class="flex">
-                        <label id="end_time_label" for="end_time" class="text-s w-17 text-bold-text">퇴근시간</label>
-                        <input type="text" name="end_time" id="end_time" th:value="${'06:00 PM'}" class="mt-0.5 p-1 time_element w-22 h-5 rounded-md text-bold-text text-right outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500">
+                        <label id="end_time_label" for="end_time" class="mt-1 text-s w-17 text-bold-text">퇴근시간</label>
+                        <input type="text" name="end_time" id="end_time" th:value="${'06:00 PM'}" class="p-0.5 mt-0.5 time_element w-22 rounded-md text-bold-text text-right outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500">
                     </div>
                 </div>
                 <div id="lunch_time_div" class="flex absolute left-41">
                     <div class="flex">
-                        <label for="lunch_time" class="text-s w-17 text-bold-text">점심시간</label>
-                        <input type="text" name="lunch_time" id="lunch_time" th:value="${'12:00 PM'}" class="mt-1 p-1 time_element w-22 h-5 rounded-md text-bold-text text-right outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500">
+                        <label id="lunchtimeLabel" for="lunch_time" class="mt-1 text-s w-17 text-bold-text">점심시간</label>
+                        <input type="text" name="lunch_time" id="lunch_time" th:value="${'12:00 PM'}" class="p-0.5 mt-1 time_element w-22 rounded-md text-bold-text text-right outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500">
                     </div>
                 </div>
             </div>
