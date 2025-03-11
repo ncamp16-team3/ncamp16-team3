@@ -62,20 +62,38 @@
             --color-bold-text: oklch(0.208 0.042 265.755);
         }
 
-        input[type=date] {
-            -webkit-appearance:none;
-        }
+        /*input[type=date]::-webkit-datetime-edit-text {*/
+        /*    -webkit-appearance: none;*/
+        /*    display: none;*/
+        /*}*/
+        /*input[type=date]::-webkit-datetime-edit-month-field{*/
+        /*    -webkit-appearance: none;*/
+        /*    display: none;*/
+        /*}*/
+        /*input[type=date]::-webkit-datetime-edit-day-field {*/
+        /*    -webkit-appearance: none;*/
+        /*    display: none;*/
+        /*}*/
+        /*input[type=date]::-webkit-datetime-edit-year-field {*/
+        /*    -webkit-appearance: none;*/
+        /*    display: none;*/
+        /*}*/
 
-        input[type='date']::before {
-            content: attr(data-placeholder);
-            color: oklch(0.704 0.04 256.788);
-            width: 100%;
-        }
-
-        input[type='date']:focus::before,
-        input[type='date']:valid::before {
+        input[type="date"]::-webkit-calendar-picker-indicator {
             display: none;
+            -webkit-appearance: none;
+            appearance: none;
         }
+
+        /*input[type=date] {*/
+        /*    -webkit-appearance:none;*/
+        /*}*/
+
+        /*input[type=date]::before {*/
+        /*    content: attr(data-placeholder);*/
+        /*    color: oklch(0.704 0.04 256.788);*/
+        /*    width: 100%;*/
+        /*}*/
     </style>
     <link rel="stylesheet" th:href="@{/css/default.css}">
     <link rel="stylesheet" th:href="@{/css/register.css}">
@@ -156,7 +174,7 @@
                     <label for="birth_date" class="block text-lg/6 text-gray-900">생년월일</label>
                 </div>
                 <div class="mt-2">
-                    <input type="date" name="birth_date" id="birth_date" data-placeholder="날짜를 입력해주세요" class="block w-full rounded-md bg-white px-3 py-1.5 text-lg text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500 sm:text-sm/6">
+                    <input type="date" name="birth_date" id="birth_date" data-placeholder="날짜를 입력해주세요" aria-required="true" class="block w-full rounded-md bg-white px-3 py-1.5 text-lg text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500 sm:text-sm/6">
                 </div>
             </div>
 
