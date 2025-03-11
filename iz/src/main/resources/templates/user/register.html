@@ -65,6 +65,11 @@
         input[type=date] {
             -webkit-appearance:none;
         }
+
+        input[type='date']::before {
+            content: attr(data-placeholder);
+            width: 100%;
+        }
     </style>
     <link rel="stylesheet" th:href="@{/css/default.css}">
     <link rel="stylesheet" th:href="@{/css/register.css}">
@@ -145,7 +150,7 @@
                     <label for="birth_date" class="block text-lg/6 text-gray-900">생년월일</label>
                 </div>
                 <div class="mt-2">
-                    <input type="date" name="birth_date" id="birth_date" class="block w-full rounded-md bg-white px-3 py-1.5 text-lg text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500 sm:text-sm/6">
+                    <input type="date" name="birth_date" id="birth_date" data-placeholder="날짜를 입력해주세요" class="block w-full rounded-md bg-white px-3 py-1.5 text-lg text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-500 sm:text-sm/6">
                 </div>
             </div>
 
