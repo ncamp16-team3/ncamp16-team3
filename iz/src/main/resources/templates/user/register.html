@@ -61,6 +61,10 @@
             /* gray-900 */
             --color-bold-text: oklch(0.208 0.042 265.755);
         }
+
+        input[type='date'] {
+            content: attr(placeholder);
+        }
     </style>
     <link rel="stylesheet" th:href="@{/css/default.css}">
     <link rel="stylesheet" th:href="@{/css/register.css}">
