@@ -115,7 +115,10 @@
     }
 
     #payday {
+        text-align-last: right;
         text-align: right;
+        -ms-text-align-last: right;
+        -moz-text-align-last: right;
     }
 
     #name,
