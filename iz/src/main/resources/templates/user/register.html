@@ -62,10 +62,9 @@
             --color-bold-text: oklch(0.208 0.042 265.755);
         }
 
-       input[type="date"]::-webkit-clear-button,
-       input[type="date"]::-webkit-inner-spin-button {
-           display: none;
-       }
+        input[type=date]::-webkit-datetime-edit-text {
+            -webkit-appearance: none; display: none
+        }
     </style>
     <link rel="stylesheet" th:href="@{/css/default.css}">
     <link rel="stylesheet" th:href="@{/css/register.css}">
