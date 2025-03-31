@@ -19,6 +19,7 @@ public class SecurityConfig {
 
     public SecurityConfig(CorsConfig corsConfig) {
         this.corsConfig = corsConfig;
+
     }
 
     @Bean
