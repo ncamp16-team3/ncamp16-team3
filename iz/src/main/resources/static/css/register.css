@@ -17,7 +17,6 @@
     }
 
     #timeDiv1 div select {
-        height: 50px;
         width: 100%;
     }
 
@@ -28,6 +27,7 @@
     #timeDiv1 div label {
         width: 8em;
         margin-left: 0;
+        margin-top: 4px;
     }
 
     #timeDiv1 div input {
@@ -67,6 +67,11 @@
     #timeDiv2 div label {
         width: 8em;
         margin-right: 0;
+        margin-top: 4px;
+    }
+
+    #lunchtimeLabel {
+        margin-top: 6px;
     }
 
     #end_time_label + input {
@@ -107,6 +112,13 @@
     #indDiv select,
     #eduDiv select {
         padding: 0.5em 1em;
+    }
+
+    #payday {
+        text-align-last: right;
+        text-align: right;
+        -ms-text-align-last: right;
+        -moz-text-align-last: right;
     }
 
     #name,
