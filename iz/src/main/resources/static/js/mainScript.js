@@ -13,7 +13,7 @@ function updateCalendar(monthlyStressList = []) {
     const monthNames = ["1월", "2월", "3월", "4월", "5월", "6월",
         "7월", "8월", "9월", "10월", "11월", "12월"];
     document.querySelector('.today-date').textContent =
-        `${monday.getFullYear()}년 ${monthNames[monday.getMonth()]}`;
+        `${today.getFullYear()}년 ${monthNames[today.getMonth()]}`;
 
     const dateGrid = document.querySelector('.calendar-grid:last-child');
     dateGrid.innerHTML = '';
